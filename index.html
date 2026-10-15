@@ -72,7 +72,7 @@ function render(){
    return `<article class="card"><div class="card-top"><div class="avatar" aria-hidden="true">${safe(x.icon||'✨')}</div><div><h3>${safe(x.name)}</h3><div class="tagline">${safe(x.service)}</div></div><span class="badge">${x.custom?'Tu demo':safe(x.badge)}</span></div><p>${safe(x.desc||'Servicio disponible en tu zona.')}</p><div class="meta"><span>📍 ${safe(x.zone)}</span><span>${safe(x.category)}</span></div><div class="card-actions">${action}${remove}</div></article>`;
  }).join(''):'<div class="empty" role="status">No encontramos coincidencias. Prueba otra búsqueda o categoría.</div>';
 }
-renderFilters();render();$('#placeLabel').textContent=readLocal('cercacerca-place','tu zona')||'tu zona';
+renderFilters();render();$('#placeLabel').textContent=getCustom()[0]?.zone||'tu zona';
 $('#filters').addEventListener('click',e=>{const b=e.target.closest('[data-category]');if(!b)return;active=b.dataset.category;renderFilters();render()});
 $('#searchBtn').addEventListener('click',render);$('#searchInput').addEventListener('input',render);
 $('#addBtn').addEventListener('click',()=>$('#providerDialog').showModal());
@@ -85,7 +85,7 @@ $('#cards').addEventListener('click',e=>{
  const del=e.target.closest('.delete-profile');
  if(del&&confirm('¿Eliminar este perfil de este dispositivo?')){
    const remaining=getCustom().filter((x,i)=>(x.id||`legacy-${i}`)!==del.dataset.id);
-   try{localStorage.setItem('cercacerca-profiles',JSON.stringify(remaining));render();}
+   try{localStorage.setItem('cercacerca-profiles',JSON.stringify(remaining));$('#placeLabel').textContent=remaining[0]?.zone||'tu zona';render();}
    catch{alert('No se pudo actualizar el almacenamiento de este dispositivo.');}
  }
 });
