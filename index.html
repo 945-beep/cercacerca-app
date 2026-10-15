@@ -17,46 +17,48 @@
   </style>
 </head>
 <body>
-  <header class="top"><div><div class="brand">Cerca<span>Cerca</span></div><div class="creator">Creada por A.V.G.</div><div class="location">Servicios cerca de <b id="placeLabel">Atlacomulco</b></div></div><button id="addBtn">＋ Ofrecer servicio</button></header>
+  <header class="top"><div><div class="brand">Cerca<span>Cerca</span></div><div class="creator">Creada por A.V.G.</div><div class="location">Servicios cerca de <b id="placeLabel">Atlacomulco</b></div></div><button id="addBtn">＋ Registrar servicio</button></header>
   <main>
-    <section class="hero"><div class="eyebrow">Lo que necesitas, más cerca</div><h1>Encuentra a quien te puede ayudar.</h1><p>Explora servicios de personas de tu zona. Compara opciones y contacta directamente, sin complicaciones.</p>
+    <section class="hero"><div class="eyebrow">Directorio local · Atlacomulco</div><h1>Encuentra el servicio que necesitas.</h1><p>Explora categorías, revisa la zona y contacta directamente con quien ofrece el servicio. Confirma precio y disponibilidad antes de contratar.</p>
       <div class="search"><input id="searchInput" type="search" placeholder="¿Qué servicio necesitas? Ej. plomería" aria-label="Buscar servicios"><button id="searchBtn">Buscar</button></div>
     </section>
-    <div class="section-head"><div><h2>Explora servicios</h2><p>Perfiles de ejemplo para probar la app</p></div></div>
+    <div class="section-head"><div><h2>Servicios por categoría</h2><p>Vista de demostración · los perfiles marcados como ejemplo son ficticios</p></div></div>
     <nav class="filters" id="filters" aria-label="Categorías"></nav>
     <section class="cards" id="cards"></section>
     <div class="section-head"><div><h2>¿Cómo funciona?</h2><p>Fácil para quien busca y para quien ofrece</p></div></div>
     <section class="how"><div class="step"><b>1. Busca</b><span>Filtra por oficio o servicio y encuentra opciones de tu zona.</span></div><div class="step"><b>2. Contacta</b><span>Habla directamente con la persona que ofrece el servicio.</span></div><div class="step"><b>3. Ofrece</b><span>Publica tu perfil gratis durante la etapa de prueba.</span></div></section>
-    <div class="notice"><b>Versión de prueba:</b> los perfiles de ejemplo son ficticios. Los perfiles que agregues se guardan solo en este dispositivo y su botón abre WhatsApp. CercaCerca aún no verifica proveedores ni procesa pagos; confirma precio y referencias antes de contratar.</div>
+    <div class="notice"><b>Demostración:</b> las fichas de ejemplo son ficticias y no tienen contacto real. Las fichas que registres se guardan solo en este dispositivo. CercaCerca aún no verifica proveedores, no comparte perfiles entre teléfonos ni procesa pagos; confirma precio, referencias y disponibilidad antes de contratar.</div>
     <div class="footer">CercaCerca · Una idea que empieza en tu comunidad</div>
   </main>
-  <dialog id="providerDialog"><form class="modal" id="providerForm"><div class="modal-head"><h2>Publica tu servicio</h2><button type="button" class="close" id="closeDialog" aria-label="Cerrar">×</button></div>
+  <dialog id="providerDialog"><form class="modal" id="providerForm"><div class="modal-head"><h2>Registra una ficha de prueba</h2><button type="button" class="close" id="closeDialog" aria-label="Cerrar">×</button></div>
     <div class="field"><label for="name">Tu nombre o negocio</label><input id="name" required maxlength="45" placeholder="Ej. Ana López"></div>
     <div class="field"><label for="service">Servicio que ofreces</label><input id="service" required maxlength="55" placeholder="Ej. Reparación de electrodomésticos"></div>
     <div class="field"><label for="category">Categoría</label><select id="category" required></select></div>
     <div class="field"><label for="zone">Zona</label><input id="zone" required maxlength="40" value="Atlacomulco" placeholder="Ej. Atlacomulco"></div>
+    <div class="field"><label for="price">Precio aproximado desde ($ MXN, opcional)</label><input id="price" type="number" min="1" step="0.01" placeholder="Ej. 250"></div>
+    <div class="field"><label for="hours">Horario de atención (opcional)</label><input id="hours" maxlength="50" placeholder="Ej. Lun–sáb, 9:00–18:00"></div>
     <div class="field"><label for="phone">WhatsApp con lada de país</label><input id="phone" type="tel" inputmode="tel" autocomplete="tel" required maxlength="22" placeholder="Ej. 52 712 123 4567"><small class="fine">En México puedes poner tus 10 dígitos; la app agrega 52.</small></div>
-    <div class="field"><label for="description">Cuéntale a la gente qué haces</label><textarea id="description" maxlength="150" placeholder="Experiencia, horario o especialidad"></textarea></div>
-    <button class="primary" type="submit">Guardar perfil de prueba</button><p class="fine">El perfil y el teléfono se guardan solo en este dispositivo. Usa un número profesional que aceptes compartir; el chat se abre únicamente si alguien pulsa el botón.</p>
+    <div class="field"><label for="description">Cuéntale a la gente qué haces</label><textarea id="description" maxlength="150" placeholder="Experiencia o especialidad del servicio"></textarea></div>
+    <button class="primary" type="submit">Guardar ficha de prueba</button><p class="fine">La ficha y el teléfono se guardan solo en este dispositivo; no se publican para otros usuarios. Usa únicamente un número profesional que aceptes compartir. WhatsApp se abre si alguien pulsa el botón.</p>
   </form></dialog>
   <dialog id="contactDialog"><div class="modal"><div class="modal-head"><h2 id="contactTitle">Contactar servicio</h2><button class="close" id="closeContact" aria-label="Cerrar">×</button></div><p id="contactText" style="color:#536159;line-height:1.55;font-size:14px"></p><p class="fine">En una versión real, aquí conectaremos un medio de contacto y mediremos solicitudes válidas para poder cobrar por contacto generado.</p><button class="primary" id="contactOk">Entendido</button></div></dialog>
 <script>
 const categories=['Todos','Hogar','Reparaciones','Belleza','Automotriz','Clases','Otros'];
 const examples=[
- {name:'Manos a la obra',service:'Plomería y reparaciones del hogar',category:'Hogar',zone:'Atlacomulco',icon:'🛠️',desc:'Reparaciones generales, fugas y mantenimiento. Atención con cita.',badge:'Perfil demo'},
- {name:'Taller Ruta 5',service:'Mecánica y diagnóstico',category:'Automotriz',zone:'Atlacomulco',icon:'🚗',desc:'Servicio preventivo, revisión básica y diagnóstico de fallas.',badge:'Perfil demo'},
- {name:'Luz y Cable',service:'Electricidad residencial',category:'Reparaciones',zone:'Atlacomulco',icon:'💡',desc:'Instalaciones, cambio de contactos y solución de fallas eléctricas.',badge:'Perfil demo'},
- {name:'Punto Creativo',service:'Clases de regularización',category:'Clases',zone:'Atlacomulco',icon:'📚',desc:'Apoyo escolar para primaria y secundaria. Horarios flexibles.',badge:'Perfil demo'},
- {name:'Estilo Cerca',service:'Corte y peinado',category:'Belleza',zone:'Atlacomulco',icon:'✂️',desc:'Cortes para toda la familia y peinados para ocasiones especiales.',badge:'Perfil demo'},
- {name:'Hogar en orden',service:'Limpieza por horas',category:'Hogar',zone:'Atlacomulco',icon:'🧹',desc:'Apoyo en limpieza de casa y organización de espacios.',badge:'Perfil demo'}
+ {name:'Servicio de plomería',service:'Reparaciones del hogar',category:'Hogar',zone:'Atlacomulco',icon:'🔧',desc:'Ficha ilustrativa; aún no corresponde a un proveedor real.',badge:'Ejemplo'},
+ {name:'Servicio de mecánica',service:'Mantenimiento automotriz',category:'Automotriz',zone:'Atlacomulco',icon:'🚗',desc:'Ficha ilustrativa; aún no corresponde a un proveedor real.',badge:'Ejemplo'},
+ {name:'Electricidad residencial',service:'Instalaciones y reparaciones',category:'Reparaciones',zone:'Atlacomulco',icon:'💡',desc:'Ficha ilustrativa; aún no corresponde a un proveedor real.',badge:'Ejemplo'},
+ {name:'Clases de regularización',service:'Apoyo escolar',category:'Clases',zone:'Atlacomulco',icon:'📚',desc:'Ficha ilustrativa; aún no corresponde a un proveedor real.',badge:'Ejemplo'},
+ {name:'Corte y peinado',service:'Belleza',category:'Belleza',zone:'Atlacomulco',icon:'✂️',desc:'Ficha ilustrativa; aún no corresponde a un proveedor real.',badge:'Ejemplo'},
+ {name:'Limpieza del hogar',service:'Limpieza por horas',category:'Hogar',zone:'Atlacomulco',icon:'🧹',desc:'Ficha ilustrativa; aún no corresponde a un proveedor real.',badge:'Ejemplo'}
 ];
 let active='Todos';
 const $=s=>document.querySelector(s);
-const safe=x=>String(x??'').replace(/[&<>"']/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]));
-const normalize=x=>String(x??'').normalize('NFD').replace(/[\u0300-\u036f]/g,'').toLowerCase().trim();
+const safe=x=>String(x===null||x===undefined?'':x).replace(/[&<>"']/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]));
+const normalize=x=>String(x===null||x===undefined?'':x).normalize('NFD').replace(/[\u0300-\u036f]/g,'').toLowerCase().trim();
 const canonicalZone=x=>{const value=String(x||'Atlacomulco').trim();return ['tecoac','tlacomulco'].includes(normalize(value))?'Atlacomulco':value};
-function readLocal(key,fallback=''){try{return localStorage.getItem(key)??fallback}catch{return fallback}}
-function getCustom(){try{const data=JSON.parse(readLocal('cercacerca-profiles','[]'));if(!Array.isArray(data))return[];const valid=data.filter(x=>x&&typeof x==='object'&&x.name&&x.service&&x.category&&x.zone);const clean=valid.map(x=>({...x,zone:canonicalZone(x.zone)}));if(clean.some((x,i)=>x.zone!==valid[i].zone))try{localStorage.setItem('cercacerca-profiles',JSON.stringify(clean))}catch{}return clean}catch{return[]}}
+function readLocal(key,fallback=''){try{const value=localStorage.getItem(key);return value===null?fallback:value}catch(err){return fallback}}
+function getCustom(){try{const data=JSON.parse(readLocal('cercacerca-profiles','[]'));if(!Array.isArray(data))return[];const valid=data.filter(x=>x&&typeof x==='object'&&x.name&&x.service&&x.category&&x.zone);const clean=valid.map(x=>({...x,zone:canonicalZone(x.zone)}));if(clean.some((x,i)=>x.zone!==valid[i].zone)){try{localStorage.setItem('cercacerca-profiles',JSON.stringify(clean))}catch(err){}}return clean}catch(err){return[]}}
 function renderFilters(){
  $('#filters').innerHTML=categories.map(c=>`<button class="chip ${active===c?'active':''}" data-category="${safe(c)}" aria-pressed="${active===c}">${safe(c)}</button>`).join('');
  $('#category').innerHTML=categories.filter(c=>c!=='Todos').map(c=>`<option value="${safe(c)}">${safe(c)}</option>`).join('');
@@ -65,12 +67,12 @@ function render(){
  const q=normalize($('#searchInput').value);
  const custom=getCustom().map((x,i)=>({...x,id:x.id||`legacy-${i}`,custom:true}));
  const all=[...custom,...examples];
- const list=all.filter(x=>(active==='Todos'||x.category===active)&&(!q||normalize(`${x.name} ${x.service} ${x.category} ${x.zone} ${x.desc}`).includes(q)));
+ const list=all.filter(x=>(active==='Todos'||x.category===active)&&(!q||normalize(`${x.name} ${x.service} ${x.category} ${x.zone} ${x.desc} ${x.hours||''} ${x.price||''}`).includes(q)));
  $('#cards').innerHTML=list.length?list.map(x=>{
    const phone=String(x.phone||'').replace(/\D/g,'');
-   const action=phone?`<a class="primary" href="https://wa.me/${phone}?text=${encodeURIComponent(`Hola, vi tu perfil en CercaCerca y quisiera información sobre ${x.service}.`)}" target="_blank" rel="noopener noreferrer">Contactar por WhatsApp</a>`:`<button type="button" class="primary contact" data-name="${safe(x.name)}" data-service="${safe(x.service)}">Ver contacto demo</button>`;
+   const action=phone?`<a class="primary" href="https://wa.me/${phone}?text=${encodeURIComponent(`Hola, vi tu perfil en CercaCerca y quisiera información sobre ${x.service}.`)}" target="_blank" rel="noopener noreferrer">Contactar por WhatsApp</a>`:`<button type="button" class="primary contact" data-name="${safe(x.name)}" data-service="${safe(x.service)}">Ver ejemplo</button>`;
    const remove=x.custom?`<button type="button" class="secondary delete-profile" data-id="${safe(x.id)}" aria-label="Eliminar perfil de ${safe(x.name)}">Eliminar</button>`:'';
-   return `<article class="card"><div class="card-top"><div class="avatar" aria-hidden="true">${safe(x.icon||'✨')}</div><div><h3>${safe(x.name)}</h3><div class="tagline">${safe(x.service)}</div></div><span class="badge">${x.custom?'Tu demo':safe(x.badge)}</span></div><p>${safe(x.desc||'Servicio disponible en tu zona.')}</p><div class="meta"><span>📍 ${safe(x.zone)}</span><span>${safe(x.category)}</span></div><div class="card-actions">${action}${remove}</div></article>`;
+   return `<article class="card"><div class="card-top"><div class="avatar" aria-hidden="true">${safe(x.icon||'✨')}</div><div><h3>${safe(x.name)}</h3><div class="tagline">${safe(x.service)}</div></div><span class="badge">${x.custom?'Ficha local':safe(x.badge)}</span></div><p>${safe(x.desc||'Servicio disponible en tu zona.')}</p><div class="meta"><span>📍 ${safe(x.zone)}</span><span>${safe(x.category)}</span></div>${x.price||x.hours?`<div class="meta"><span>${x.price?`Desde $${safe(x.price)} MXN`:''}</span><span>${safe(x.hours||'')}</span></div>`:''}<div class="card-actions">${action}${remove}</div></article>`;
  }).join(''):'<div class="empty" role="status">No encontramos coincidencias. Prueba otra búsqueda o categoría.</div>';
 }
 renderFilters();render();$('#placeLabel').textContent='Atlacomulco';
@@ -87,19 +89,20 @@ $('#cards').addEventListener('click',e=>{
  if(del&&confirm('¿Eliminar este perfil de este dispositivo?')){
    const remaining=getCustom().filter((x,i)=>(x.id||`legacy-${i}`)!==del.dataset.id);
    try{localStorage.setItem('cercacerca-profiles',JSON.stringify(remaining));$('#placeLabel').textContent='Atlacomulco';render();}
-   catch{alert('No se pudo actualizar el almacenamiento de este dispositivo.');}
+   catch(err){alert('No se pudo actualizar el almacenamiento de este dispositivo.');}
  }
 });
 $('#providerForm').addEventListener('submit',e=>{
  e.preventDefault();
- const name=$('#name').value.trim(),service=$('#service').value.trim(),zone=canonicalZone($('#zone').value.trim()),digits=$('#phone').value.replace(/\D/g,'');
+ const name=$('#name').value.trim(),service=$('#service').value.trim(),zone=canonicalZone($('#zone').value.trim()),digits=$('#phone').value.replace(/\D/g,''),priceInput=$('#price').value.trim(),price=priceInput?Number(priceInput):'',hours=$('#hours').value.trim();
  if(!name||!service||!zone){alert('Completa tu nombre, servicio y zona.');return;}
+ if(priceInput&&(!Number.isFinite(price)||price<=0)){alert('Escribe un precio válido o deja el campo vacío.');return;}
  if(digits.length<10||digits.length>15){alert('Revisa el WhatsApp: usa entre 10 y 15 dígitos. En México, si escribes 10 dígitos locales, se agrega la lada 52.');return;}
  const phone=digits.length===10?'52'+digits:digits;
- const p={id:(globalThis.crypto?.randomUUID?.()||`${Date.now()}-${Math.random().toString(36).slice(2)}`),name,service,category:$('#category').value,zone,phone,icon:'✨',desc:$('#description').value.trim()||'Servicio ofrecido en tu zona.'};
+ const p={id:((window.crypto&&window.crypto.randomUUID)?window.crypto.randomUUID():`${Date.now()}-${Math.random().toString(36).slice(2)}`),name,service,category:$('#category').value,zone,phone,price,hours,icon:'✨',desc:$('#description').value.trim()||'Servicio ofrecido en tu zona.'};
  const arr=getCustom();arr.unshift(p);
  try{localStorage.setItem('cercacerca-profiles',JSON.stringify(arr));localStorage.setItem('cercacerca-place',zone);}
- catch{alert('No se pudo guardar en este dispositivo. Revisa el espacio disponible del navegador e inténtalo otra vez.');return;}
+ catch(err){alert('No se pudo guardar en este dispositivo. Revisa el espacio disponible del navegador e inténtalo otra vez.');return;}
  $('#placeLabel').textContent='Atlacomulco';$('#providerDialog').close();e.target.reset();active='Todos';renderFilters();render();window.scrollTo({top:document.querySelector('.section-head').offsetTop-80,behavior:'smooth'});
 });
 if('serviceWorker'in navigator)window.addEventListener('load',()=>navigator.serviceWorker.register('./sw.js').catch(()=>{}));

@@ -1,19 +1,16 @@
 # CercaCerca — prototipo público
 
-Directorio local de servicios, pensado como web app instalable (PWA) en Android.
+Directorio local de servicios de Atlacomulco, pensado como PWA instalable en Android.
 
 ## Funciona en esta demo
-- Búsqueda sin distinguir mayúsculas ni acentos, filtros por categoría y mensaje de "sin resultados".
-- Alta y eliminación de perfiles de prueba en el almacenamiento local del dispositivo.
-- Botón de WhatsApp para perfiles agregados. Los números de 10 dígitos mexicanos reciben prefijo 52 automáticamente; otros países deben incluir su lada internacional.
-- Los datos del perfil solo viven en ese navegador. El enlace abre WhatsApp únicamente cuando alguien lo pulsa.
-- Cache PWA con iconos PNG; la función sin conexión necesita una primera carga con conexión.
+- Búsqueda que ignora acentos, filtros por categoría y estado sin resultados.
+- Fichas de muestra con contacto claramente marcado como no real.
+- Alta y eliminación de fichas locales; cada ficha puede incluir precio aproximado y horario.
+- El WhatsApp se abre solo al pulsar el botón; se agrega lada 52 a números mexicanos de 10 dígitos.
+- Iconos PWA, cache de recursos estáticos y acceso desde Android.
 
-## Monetización planteada (no implementada)
-Etapa inicial gratuita para captar oferta y demanda. Después se podría cobrar a proveedores por contactos válidos o por destacar el perfil, con precio y reglas transparentes.
+## Monetización posible (no implementada)
+Una vez que haya usuarios, probar tarifa por contacto válido o por destacar una ficha, con precio y condiciones transparentes.
 
 ## Límites y seguridad
-No hay servidor, cuentas, moderación, reseñas verificadas, sincronización entre dispositivos ni pagos. Los perfiles iniciales son ficticios y se muestran como demos. La app no verifica a proveedores; confirma precio y referencias antes de contratar. No usar datos sensibles.
-
-## Validación
-Probada en el navegador con el catálogo de ejemplo y con operaciones de búsqueda, filtros, guardado, contacto y eliminación de un perfil de prueba. GitHub Pages sirve la demo pública sobre HTTPS.
+No hay servidor, cuentas, moderación, reseñas verificadas, sincronización entre dispositivos ni pagos. Las fichas iniciales son ejemplos ficticios; la app no verifica proveedores. Las fichas creadas en la demo solo se guardan en el navegador actual. Confirma precio, referencias y disponibilidad antes de contratar.
