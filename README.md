@@ -1,14 +1,19 @@
-# CercaCerca — prototipo inicial
+# CercaCerca — prototipo público
 
 Directorio local de servicios, pensado como web app instalable (PWA) en Android.
 
-## Probar
-- Abre `index.html` en un navegador para revisar el prototipo.
-- Para instalar/offline desde Android, los archivos deben servirse desde un hosting HTTPS (la vista offline se activa después de la primera carga).
-- La demo permite filtrar ejemplos, guardar perfiles locales en el mismo navegador y abrir un chat de WhatsApp para perfiles reales que agregues. El contacto funciona con el número que ingrese la persona; no hay servidor ni sincronización entre dispositivos.
+## Funciona en esta demo
+- Búsqueda sin distinguir mayúsculas ni acentos, filtros por categoría y mensaje de "sin resultados".
+- Alta y eliminación de perfiles de prueba en el almacenamiento local del dispositivo.
+- Botón de WhatsApp para perfiles agregados. Los números de 10 dígitos mexicanos reciben prefijo 52 automáticamente; otros países deben incluir su lada internacional.
+- Los datos del perfil solo viven en ese navegador. El enlace abre WhatsApp únicamente cuando alguien lo pulsa.
+- Cache PWA con iconos PNG; la función sin conexión necesita una primera carga con conexión.
 
 ## Monetización planteada (no implementada)
-Etapa inicial gratuita para captar oferta y demanda. Después: cobro a proveedores por contacto válido o perfil destacado; empezar manualmente y transparentar precio y reglas antes de cobrar.
+Etapa inicial gratuita para captar oferta y demanda. Después se podría cobrar a proveedores por contactos válidos o por destacar el perfil, con precio y reglas transparentes.
 
-## Límites de esta demo
-No hay servidor, cuentas, moderación ni pagos. Se incluyen iconos PNG estándar y manifest para mejorar la instalación PWA en Android. Los perfiles iniciales son ficticios. Los perfiles que agregues viven únicamente en ese navegador/dispositivo; su botón abre WhatsApp usando el número que ingresaste. No hay sincronización entre dispositivos ni cobros implementados.
+## Límites y seguridad
+No hay servidor, cuentas, moderación, reseñas verificadas, sincronización entre dispositivos ni pagos. Los perfiles iniciales son ficticios y se muestran como demos. La app no verifica a proveedores; confirma precio y referencias antes de contratar. No usar datos sensibles.
+
+## Validación
+Probada en el navegador con el catálogo de ejemplo y con operaciones de búsqueda, filtros, guardado, contacto y eliminación de un perfil de prueba. GitHub Pages sirve la demo pública sobre HTTPS.
