@@ -8,7 +8,7 @@
   <style>
     :root{--ink:#14251f;--muted:#66746d;--green:#1b7255;--lime:#d8f36b;--cream:#f5f5ef;--white:#fff;--line:#e6e9e2;--shadow:0 12px 34px #18372a12}
     *{box-sizing:border-box}body{margin:0;background:var(--cream);color:var(--ink);font-family:Inter,ui-sans-serif,system-ui,-apple-system,"Segoe UI",sans-serif}button,input,select,textarea{font:inherit}button{cursor:pointer}
-    .top{background:#10251f;color:white;padding:18px max(20px,calc((100vw - 1120px)/2));display:flex;align-items:center;justify-content:space-between;gap:12px;position:sticky;top:0;z-index:3}.brand{font-weight:850;letter-spacing:-.7px;font-size:21px}.brand span{color:var(--lime)}.location{font-size:13px;color:#c4d0c9}.location b{color:#fff}.top button{background:var(--lime);border:0;color:var(--ink);font-weight:750;border-radius:999px;padding:11px 16px}
+    .top{background:#10251f;color:white;padding:18px max(20px,calc((100vw - 1120px)/2));display:flex;align-items:center;justify-content:space-between;gap:12px;position:sticky;top:0;z-index:3}.brand{font-weight:850;letter-spacing:-.7px;font-size:21px}.brand span{color:var(--lime)}.creator{font-size:11px;color:var(--lime);font-weight:750;letter-spacing:.2px;margin:2px 0 3px}.location{font-size:13px;color:#c4d0c9}.location b{color:#fff}.top button{background:var(--lime);border:0;color:var(--ink);font-weight:750;border-radius:999px;padding:11px 16px}
     main{max-width:1120px;margin:auto;padding:35px 20px 80px}.hero{background:linear-gradient(125deg,#174f3d,#10251f);border-radius:26px;padding:36px;color:white;position:relative;overflow:hidden}.hero:after{content:"";position:absolute;width:290px;height:290px;border:1px solid #ffffff20;border-radius:50%;right:-65px;top:-120px;box-shadow:0 0 0 36px #ffffff08,0 0 0 72px #ffffff05}.eyebrow{color:var(--lime);font-size:12px;text-transform:uppercase;letter-spacing:1.4px;font-weight:800}.hero h1{font-size:clamp(32px,5vw,52px);line-height:1.04;letter-spacing:-1.7px;max-width:620px;margin:12px 0}.hero p{color:#d4e0d9;max-width:530px;line-height:1.6;margin:0 0 24px}.search{display:flex;gap:9px;background:white;padding:7px;border-radius:14px;max-width:690px;position:relative;z-index:1}.search input{border:0;outline:0;flex:1;min-width:100px;padding:12px;color:var(--ink)}.search button{background:var(--lime);border:0;border-radius:10px;padding:0 19px;font-weight:800;color:var(--ink)}
     .section-head{display:flex;align-items:end;justify-content:space-between;gap:12px;margin:32px 0 14px}.section-head h2{font-size:22px;margin:0;letter-spacing:-.5px}.section-head p{margin:5px 0 0;color:var(--muted);font-size:13px}.filters{display:flex;gap:8px;overflow:auto;padding:2px 0 7px;scrollbar-width:none}.chip{border:1px solid var(--line);background:white;border-radius:999px;padding:9px 14px;white-space:nowrap;color:#47564e;font-weight:650;font-size:13px}.chip.active{background:var(--ink);color:white;border-color:var(--ink)}.cards{display:grid;grid-template-columns:repeat(3,1fr);gap:15px;margin-top:15px}.card{background:white;border:1px solid var(--line);border-radius:18px;padding:18px;box-shadow:var(--shadow)}.card-top{display:flex;align-items:center;gap:12px}.avatar{width:48px;height:48px;display:grid;place-items:center;background:#e7f1e9;border-radius:15px;font-size:24px}.card h3{font-size:16px;margin:0 0 3px}.tagline{font-size:12px;color:var(--muted)}.badge{margin-left:auto;align-self:flex-start;background:#eef5dc;color:#446014;border-radius:999px;padding:5px 8px;font-size:10px;font-weight:800}.card p{color:#536159;font-size:13px;line-height:1.5;min-height:40px;margin:15px 0}.meta{display:flex;justify-content:space-between;border-top:1px solid var(--line);padding-top:12px;font-size:12px;color:var(--muted)}.card-actions{display:flex;gap:8px;margin-top:14px}.primary,.secondary{border:0;border-radius:10px;padding:10px 12px;font-weight:750;font-size:12px}.primary{background:var(--green);color:white;flex:1;display:inline-flex;align-items:center;justify-content:center;text-align:center;text-decoration:none}.secondary{background:#eef1eb;color:var(--ink)}
     button:focus-visible,a:focus-visible,input:focus-visible,select:focus-visible,textarea:focus-visible{outline:3px solid #1b7255;outline-offset:2px}.secondary{background:#eef1eb;color:var(--ink)}.empty{grid-column:1/-1;text-align:center;padding:42px;color:var(--muted);background:#fff;border-radius:18px}.how{display:grid;grid-template-columns:repeat(3,1fr);gap:12px;margin-top:15px}.step{padding:18px;background:#edf0e8;border-radius:15px}.step b{display:block;margin-bottom:5px}.step span{color:var(--muted);font-size:13px;line-height:1.5}.footer{text-align:center;color:var(--muted);font-size:12px;padding:28px 0 0}.notice{margin-top:20px;background:#fff8df;border:1px solid #f0e3ae;color:#6b5814;border-radius:12px;padding:12px 14px;font-size:12px;line-height:1.5}
@@ -17,7 +17,7 @@
   </style>
 </head>
 <body>
-  <header class="top"><div><div class="brand">Cerca<span>Cerca</span></div><div class="location">Servicios cerca de <b id="placeLabel">tu zona</b></div></div><button id="addBtn">＋ Ofrecer servicio</button></header>
+  <header class="top"><div><div class="brand">Cerca<span>Cerca</span></div><div class="creator">Creada por A.V.G.</div><div class="location">Servicios cerca de <b id="placeLabel">Atlacomulco</b></div></div><button id="addBtn">＋ Ofrecer servicio</button></header>
   <main>
     <section class="hero"><div class="eyebrow">Lo que necesitas, más cerca</div><h1>Encuentra a quien te puede ayudar.</h1><p>Explora servicios de personas de tu zona. Compara opciones y contacta directamente, sin complicaciones.</p>
       <div class="search"><input id="searchInput" type="search" placeholder="¿Qué servicio necesitas? Ej. plomería" aria-label="Buscar servicios"><button id="searchBtn">Buscar</button></div>
@@ -28,13 +28,13 @@
     <div class="section-head"><div><h2>¿Cómo funciona?</h2><p>Fácil para quien busca y para quien ofrece</p></div></div>
     <section class="how"><div class="step"><b>1. Busca</b><span>Filtra por oficio o servicio y encuentra opciones de tu zona.</span></div><div class="step"><b>2. Contacta</b><span>Habla directamente con la persona que ofrece el servicio.</span></div><div class="step"><b>3. Ofrece</b><span>Publica tu perfil gratis durante la etapa de prueba.</span></div></section>
     <div class="notice"><b>Versión de prueba:</b> los perfiles de ejemplo son ficticios. Los perfiles que agregues se guardan solo en este dispositivo y su botón abre WhatsApp. CercaCerca aún no verifica proveedores ni procesa pagos; confirma precio y referencias antes de contratar.</div>
-    <div class="footer">CercaCerca · Una idea que empieza en tu comunidad · Creada por A.V.G.</div>
+    <div class="footer">CercaCerca · Una idea que empieza en tu comunidad</div>
   </main>
   <dialog id="providerDialog"><form class="modal" id="providerForm"><div class="modal-head"><h2>Publica tu servicio</h2><button type="button" class="close" id="closeDialog" aria-label="Cerrar">×</button></div>
     <div class="field"><label for="name">Tu nombre o negocio</label><input id="name" required maxlength="45" placeholder="Ej. Ana López"></div>
     <div class="field"><label for="service">Servicio que ofreces</label><input id="service" required maxlength="55" placeholder="Ej. Reparación de electrodomésticos"></div>
     <div class="field"><label for="category">Categoría</label><select id="category" required></select></div>
-    <div class="field"><label for="zone">Zona</label><input id="zone" required maxlength="40" placeholder="Ej. Atlacomulco"></div>
+    <div class="field"><label for="zone">Zona</label><input id="zone" required maxlength="40" value="Atlacomulco" placeholder="Ej. Atlacomulco"></div>
     <div class="field"><label for="phone">WhatsApp con lada de país</label><input id="phone" type="tel" inputmode="tel" autocomplete="tel" required maxlength="22" placeholder="Ej. 52 712 123 4567"><small class="fine">En México puedes poner tus 10 dígitos; la app agrega 52.</small></div>
     <div class="field"><label for="description">Cuéntale a la gente qué haces</label><textarea id="description" maxlength="150" placeholder="Experiencia, horario o especialidad"></textarea></div>
     <button class="primary" type="submit">Guardar perfil de prueba</button><p class="fine">El perfil y el teléfono se guardan solo en este dispositivo. Usa un número profesional que aceptes compartir; el chat se abre únicamente si alguien pulsa el botón.</p>
@@ -43,19 +43,20 @@
 <script>
 const categories=['Todos','Hogar','Reparaciones','Belleza','Automotriz','Clases','Otros'];
 const examples=[
- {name:'Manos a la obra',service:'Plomería y reparaciones del hogar',category:'Hogar',zone:'Tu zona',icon:'🛠️',desc:'Reparaciones generales, fugas y mantenimiento. Atención con cita.',badge:'Perfil demo'},
- {name:'Taller Ruta 5',service:'Mecánica y diagnóstico',category:'Automotriz',zone:'Tu zona',icon:'🚗',desc:'Servicio preventivo, revisión básica y diagnóstico de fallas.',badge:'Perfil demo'},
- {name:'Luz y Cable',service:'Electricidad residencial',category:'Reparaciones',zone:'Tu zona',icon:'💡',desc:'Instalaciones, cambio de contactos y solución de fallas eléctricas.',badge:'Perfil demo'},
- {name:'Punto Creativo',service:'Clases de regularización',category:'Clases',zone:'Tu zona',icon:'📚',desc:'Apoyo escolar para primaria y secundaria. Horarios flexibles.',badge:'Perfil demo'},
- {name:'Estilo Cerca',service:'Corte y peinado',category:'Belleza',zone:'Tu zona',icon:'✂️',desc:'Cortes para toda la familia y peinados para ocasiones especiales.',badge:'Perfil demo'},
- {name:'Hogar en orden',service:'Limpieza por horas',category:'Hogar',zone:'Tu zona',icon:'🧹',desc:'Apoyo en limpieza de casa y organización de espacios.',badge:'Perfil demo'}
+ {name:'Manos a la obra',service:'Plomería y reparaciones del hogar',category:'Hogar',zone:'Atlacomulco',icon:'🛠️',desc:'Reparaciones generales, fugas y mantenimiento. Atención con cita.',badge:'Perfil demo'},
+ {name:'Taller Ruta 5',service:'Mecánica y diagnóstico',category:'Automotriz',zone:'Atlacomulco',icon:'🚗',desc:'Servicio preventivo, revisión básica y diagnóstico de fallas.',badge:'Perfil demo'},
+ {name:'Luz y Cable',service:'Electricidad residencial',category:'Reparaciones',zone:'Atlacomulco',icon:'💡',desc:'Instalaciones, cambio de contactos y solución de fallas eléctricas.',badge:'Perfil demo'},
+ {name:'Punto Creativo',service:'Clases de regularización',category:'Clases',zone:'Atlacomulco',icon:'📚',desc:'Apoyo escolar para primaria y secundaria. Horarios flexibles.',badge:'Perfil demo'},
+ {name:'Estilo Cerca',service:'Corte y peinado',category:'Belleza',zone:'Atlacomulco',icon:'✂️',desc:'Cortes para toda la familia y peinados para ocasiones especiales.',badge:'Perfil demo'},
+ {name:'Hogar en orden',service:'Limpieza por horas',category:'Hogar',zone:'Atlacomulco',icon:'🧹',desc:'Apoyo en limpieza de casa y organización de espacios.',badge:'Perfil demo'}
 ];
 let active='Todos';
 const $=s=>document.querySelector(s);
 const safe=x=>String(x??'').replace(/[&<>"']/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]));
 const normalize=x=>String(x??'').normalize('NFD').replace(/[\u0300-\u036f]/g,'').toLowerCase().trim();
+const canonicalZone=x=>{const value=String(x||'Atlacomulco').trim();return ['tecoac','tlacomulco'].includes(normalize(value))?'Atlacomulco':value};
 function readLocal(key,fallback=''){try{return localStorage.getItem(key)??fallback}catch{return fallback}}
-function getCustom(){try{const data=JSON.parse(readLocal('cercacerca-profiles','[]'));return Array.isArray(data)?data.filter(x=>x&&typeof x==='object'&&x.name&&x.service&&x.category&&x.zone):[]}catch{return[]}}
+function getCustom(){try{const data=JSON.parse(readLocal('cercacerca-profiles','[]'));if(!Array.isArray(data))return[];const valid=data.filter(x=>x&&typeof x==='object'&&x.name&&x.service&&x.category&&x.zone);const clean=valid.map(x=>({...x,zone:canonicalZone(x.zone)}));if(clean.some((x,i)=>x.zone!==valid[i].zone))try{localStorage.setItem('cercacerca-profiles',JSON.stringify(clean))}catch{}return clean}catch{return[]}}
 function renderFilters(){
  $('#filters').innerHTML=categories.map(c=>`<button class="chip ${active===c?'active':''}" data-category="${safe(c)}" aria-pressed="${active===c}">${safe(c)}</button>`).join('');
  $('#category').innerHTML=categories.filter(c=>c!=='Todos').map(c=>`<option value="${safe(c)}">${safe(c)}</option>`).join('');
@@ -72,7 +73,7 @@ function render(){
    return `<article class="card"><div class="card-top"><div class="avatar" aria-hidden="true">${safe(x.icon||'✨')}</div><div><h3>${safe(x.name)}</h3><div class="tagline">${safe(x.service)}</div></div><span class="badge">${x.custom?'Tu demo':safe(x.badge)}</span></div><p>${safe(x.desc||'Servicio disponible en tu zona.')}</p><div class="meta"><span>📍 ${safe(x.zone)}</span><span>${safe(x.category)}</span></div><div class="card-actions">${action}${remove}</div></article>`;
  }).join(''):'<div class="empty" role="status">No encontramos coincidencias. Prueba otra búsqueda o categoría.</div>';
 }
-renderFilters();render();$('#placeLabel').textContent=getCustom()[0]?.zone||'tu zona';
+renderFilters();render();$('#placeLabel').textContent=canonicalZone(getCustom()[0]?.zone||readLocal('cercacerca-place','Atlacomulco')); 
 $('#filters').addEventListener('click',e=>{const b=e.target.closest('[data-category]');if(!b)return;active=b.dataset.category;renderFilters();render()});
 $('#searchBtn').addEventListener('click',render);$('#searchInput').addEventListener('input',render);
 $('#addBtn').addEventListener('click',()=>$('#providerDialog').showModal());
@@ -85,13 +86,13 @@ $('#cards').addEventListener('click',e=>{
  const del=e.target.closest('.delete-profile');
  if(del&&confirm('¿Eliminar este perfil de este dispositivo?')){
    const remaining=getCustom().filter((x,i)=>(x.id||`legacy-${i}`)!==del.dataset.id);
-   try{localStorage.setItem('cercacerca-profiles',JSON.stringify(remaining));$('#placeLabel').textContent=remaining[0]?.zone||'tu zona';render();}
+   try{localStorage.setItem('cercacerca-profiles',JSON.stringify(remaining));$('#placeLabel').textContent=canonicalZone(remaining[0]?.zone||'Atlacomulco');render();}
    catch{alert('No se pudo actualizar el almacenamiento de este dispositivo.');}
  }
 });
 $('#providerForm').addEventListener('submit',e=>{
  e.preventDefault();
- const name=$('#name').value.trim(),service=$('#service').value.trim(),zone=$('#zone').value.trim(),digits=$('#phone').value.replace(/\D/g,'');
+ const name=$('#name').value.trim(),service=$('#service').value.trim(),zone=canonicalZone($('#zone').value.trim()),digits=$('#phone').value.replace(/\D/g,'');
  if(!name||!service||!zone){alert('Completa tu nombre, servicio y zona.');return;}
  if(digits.length<10||digits.length>15){alert('Revisa el WhatsApp: usa entre 10 y 15 dígitos. En México, si escribes 10 dígitos locales, se agrega la lada 52.');return;}
  const phone=digits.length===10?'52'+digits:digits;
