@@ -11,4 +11,4 @@ Directorio local de servicios, pensado como web app instalable (PWA) en Android.
 Etapa inicial gratuita para captar oferta y demanda. Después: cobro a proveedores por contacto válido o perfil destacado; empezar manualmente y transparentar precio y reglas antes de cobrar.
 
 ## Límites de esta demo
-No hay servidor, cuentas, moderación ni pagos. Los perfiles iniciales son ficticios. Los perfiles que agregues viven únicamente en ese navegador/dispositivo; su botón abre WhatsApp usando el número que ingresaste. No hay sincronización entre dispositivos ni cobros implementados.
+No hay servidor, cuentas, moderación ni pagos. Se incluyen iconos PNG estándar y manifest para mejorar la instalación PWA en Android. Los perfiles iniciales son ficticios. Los perfiles que agregues viven únicamente en ese navegador/dispositivo; su botón abre WhatsApp usando el número que ingresaste. No hay sincronización entre dispositivos ni cobros implementados.
