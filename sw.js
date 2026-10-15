@@ -1,8 +1,9 @@
-const CACHE = 'cercacerca-demo-v4';
+const CACHE = 'cercacerca-demo-v5';
 const FILES = [
   './',
   './index.html',
   './manifest.json',
+  './supabase-config.js',
   './icon.svg',
   './icon-192.png',
   './icon-512.png',

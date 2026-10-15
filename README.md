@@ -2,15 +2,17 @@
 
 Directorio local de servicios de Atlacomulco, pensado como PWA instalable en Android.
 
-## Funciona en esta demo
+## Funciona en la demo actual
 - Búsqueda que ignora acentos, filtros por categoría y estado sin resultados.
-- Fichas de muestra con contacto claramente marcado como no real.
+- Fichas de muestra marcadas como ficticias; no incluyen negocios ni teléfonos reales.
 - Alta y eliminación de fichas locales; cada ficha puede incluir precio aproximado y horario.
-- El WhatsApp se abre solo al pulsar el botón; se agrega lada 52 a números mexicanos de 10 dígitos.
-- Iconos PWA, cache de recursos estáticos y acceso desde Android.
+- El botón de WhatsApp se abre únicamente al pulsarlo; se agrega la lada 52 a números mexicanos de 10 dígitos.
+- Iconos PWA y cache básico para uso sin conexión.
 
-## Monetización posible (no implementada)
-Una vez que haya usuarios, probar tarifa por contacto válido o por destacar una ficha, con precio y condiciones transparentes.
+## Preparación para el directorio compartido
+Hay un esquema inicial de Supabase en `supabase/schema.sql`. Cuando se conecte un proyecto, las propuestas de servicio quedarán privadas como `pending` y solo las fichas revisadas manualmente podrán aparecer en público. La integración requiere URL del proyecto y clave pública anon/publishable. Nunca poner una `service_role` key en la web. Guía: `supabase/SETUP.md`.
 
-## Límites y seguridad
-No hay servidor, cuentas, moderación, reseñas verificadas, sincronización entre dispositivos ni pagos. Las fichas iniciales son ejemplos ficticios; la app no verifica proveedores. Las fichas creadas en la demo solo se guardan en el navegador actual. Confirma precio, referencias y disponibilidad antes de contratar.
+El sitio todavía no tiene un proyecto Supabase conectado; hasta entonces, las fichas creadas por visitantes solo se guardan en su propio navegador y los ejemplos ficticios permanecen visibles.
+
+## Límites
+No hay verificación automática de proveedores, moderación integrada, reseñas, sincronización activa ni pagos. No se agregan negocios ni teléfonos reales sin permiso expreso. Confirma precio, disponibilidad y referencias antes de contratar.
