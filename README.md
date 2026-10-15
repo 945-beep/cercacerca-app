@@ -10,7 +10,7 @@ Directorio local de servicios de Atlacomulco, pensado como PWA instalable en And
 - Iconos PWA y cache básico para uso sin conexión.
 
 ## Preparación para el directorio compartido
-Hay un esquema inicial de Supabase en `supabase/schema.sql`. Cuando se conecte un proyecto, las propuestas de servicio quedarán privadas como `pending` y solo las fichas revisadas manualmente podrán aparecer en público. La integración requiere URL del proyecto y clave pública anon/publishable. Nunca poner una `service_role` key en la web. Guía: `supabase/SETUP.md`.
+Hay un esquema inicial de Supabase en `schema.sql`. Cuando se conecte un proyecto, las propuestas de servicio quedarán privadas como `pending` y solo las fichas revisadas manualmente podrán aparecer en público. La integración requiere URL del proyecto y clave pública anon/publishable. Nunca poner una `service_role` key en la web. Guía: `SETUP.md`.
 
 El sitio todavía no tiene un proyecto Supabase conectado; hasta entonces, las fichas creadas por visitantes solo se guardan en su propio navegador y los ejemplos ficticios permanecen visibles.
 
