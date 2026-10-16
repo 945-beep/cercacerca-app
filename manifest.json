@@ -1,7 +1,7 @@
 {
-  "name": "CercaCerca — servicios de tu zona",
+  "name": "CercaCerca — compra, vende y descubre cerca",
   "short_name": "CercaCerca",
-  "description": "Encuentra personas que ofrecen servicios cerca de ti.",
+  "description": "Descubre productos, servicios y ofertas de negocios locales.",
   "display": "standalone",
   "background_color": "#f5f5ef",
   "theme_color": "#10251f",

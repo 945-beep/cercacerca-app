@@ -2,9 +2,9 @@
 <html lang="es">
 <head>
   <meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
-  <meta name="theme-color" content="#10251f"><meta name="description" content="Encuentra servicios locales y contacta directamente con quien los ofrece.">
+  <meta name="theme-color" content="#10251f"><meta name="description" content="Descubre productos, servicios y ofertas locales en CercaCerca.">
   <link rel="manifest" href="manifest.json"><link rel="icon" href="icon.svg" type="image/svg+xml"><link rel="apple-touch-icon" href="apple-touch-icon.png">
-  <title>CercaCerca — servicios de tu zona</title>
+  <title>CercaCerca — compra, vende y descubre cerca</title>
   <style>
     :root{--ink:#14251f;--muted:#66746d;--green:#1b7255;--lime:#d8f36b;--cream:#f5f5ef;--white:#fff;--line:#e6e9e2;--shadow:0 12px 34px #18372a12}
     *{box-sizing:border-box}body{margin:0;background:var(--cream);color:var(--ink);font-family:Inter,ui-sans-serif,system-ui,-apple-system,"Segoe UI",sans-serif}button,input,select,textarea{font:inherit}button{cursor:pointer}
@@ -12,22 +12,27 @@
     main{max-width:1120px;margin:auto;padding:35px 20px 80px}.hero{background:linear-gradient(125deg,#174f3d,#10251f);border-radius:26px;padding:36px;color:white;position:relative;overflow:hidden}.hero:after{content:"";position:absolute;width:290px;height:290px;border:1px solid #ffffff20;border-radius:50%;right:-65px;top:-120px;box-shadow:0 0 0 36px #ffffff08,0 0 0 72px #ffffff05}.eyebrow{color:var(--lime);font-size:12px;text-transform:uppercase;letter-spacing:1.4px;font-weight:800}.hero h1{font-size:clamp(32px,5vw,52px);line-height:1.04;letter-spacing:-1.7px;max-width:620px;margin:12px 0}.hero p{color:#d4e0d9;max-width:530px;line-height:1.6;margin:0 0 24px}.search{display:flex;gap:9px;background:white;padding:7px;border-radius:14px;max-width:690px;position:relative;z-index:1}.search input{border:0;outline:0;flex:1;min-width:100px;padding:12px;color:var(--ink)}.search button{background:var(--lime);border:0;border-radius:10px;padding:0 19px;font-weight:800;color:var(--ink)}
     .section-head{display:flex;align-items:end;justify-content:space-between;gap:12px;margin:32px 0 14px}.section-head h2{font-size:22px;margin:0;letter-spacing:-.5px}.section-head p{margin:5px 0 0;color:var(--muted);font-size:13px}.filters{display:flex;gap:8px;overflow:auto;padding:2px 0 7px;scrollbar-width:none}.chip{border:1px solid var(--line);background:white;border-radius:999px;padding:9px 14px;white-space:nowrap;color:#47564e;font-weight:650;font-size:13px}.chip.active{background:var(--ink);color:white;border-color:var(--ink)}.cards{display:grid;grid-template-columns:repeat(3,1fr);gap:15px;margin-top:15px}.card{background:white;border:1px solid var(--line);border-radius:18px;padding:18px;box-shadow:var(--shadow)}.card-top{display:flex;align-items:center;gap:12px}.avatar{width:48px;height:48px;display:grid;place-items:center;background:#e7f1e9;border-radius:15px;font-size:24px}.card h3{font-size:16px;margin:0 0 3px}.tagline{font-size:12px;color:var(--muted)}.badge{margin-left:auto;align-self:flex-start;background:#eef5dc;color:#446014;border-radius:999px;padding:5px 8px;font-size:10px;font-weight:800}.card p{color:#536159;font-size:13px;line-height:1.5;min-height:40px;margin:15px 0}.meta{display:flex;justify-content:space-between;border-top:1px solid var(--line);padding-top:12px;font-size:12px;color:var(--muted)}.card-actions{display:flex;gap:8px;margin-top:14px}.primary,.secondary{border:0;border-radius:10px;padding:10px 12px;font-weight:750;font-size:12px}.primary{background:var(--green);color:white;flex:1;display:inline-flex;align-items:center;justify-content:center;text-align:center;text-decoration:none}.secondary{background:#eef1eb;color:var(--ink)}
     button:focus-visible,a:focus-visible,input:focus-visible,select:focus-visible,textarea:focus-visible{outline:3px solid #1b7255;outline-offset:2px}.secondary{background:#eef1eb;color:var(--ink)}.empty{grid-column:1/-1;text-align:center;padding:42px;color:var(--muted);background:#fff;border-radius:18px}.how{display:grid;grid-template-columns:repeat(3,1fr);gap:12px;margin-top:15px}.step{padding:18px;background:#edf0e8;border-radius:15px}.step b{display:block;margin-bottom:5px}.step span{color:var(--muted);font-size:13px;line-height:1.5}.footer{text-align:center;color:var(--muted);font-size:12px;padding:28px 0 0}.notice{margin-top:20px;background:#fff8df;border:1px solid #f0e3ae;color:#6b5814;border-radius:12px;padding:12px 14px;font-size:12px;line-height:1.5}
-    dialog{border:0;border-radius:20px;padding:0;width:min(480px,calc(100% - 28px));box-shadow:0 24px 80px #0004}dialog::backdrop{background:#06150f99}.modal{padding:23px}.modal-head{display:flex;justify-content:space-between;align-items:center;margin-bottom:17px}.modal-head h2{margin:0;font-size:20px}.close{border:0;background:#edf0e8;border-radius:50%;width:34px;height:34px;font-size:19px}.field{display:grid;gap:6px;margin:12px 0}.field label{font-size:12px;font-weight:750}.field input,.field select,.field textarea{border:1px solid #dce2da;border-radius:10px;padding:11px;outline-color:var(--green);background:white}.field textarea{resize:vertical;min-height:75px}.modal .primary{width:100%;padding:12px}.fine{color:var(--muted);font-size:11px;line-height:1.5;margin:10px 0 0}
-    @media(max-width:800px){.cards{grid-template-columns:repeat(2,1fr)}}@media(max-width:560px){.top{padding:13px 15px}.location{font-size:11px}.top button{padding:9px 12px;font-size:12px}main{padding:20px 14px 60px}.hero{padding:25px 19px;border-radius:20px}.hero h1{font-size:37px}.search{gap:3px}.search input{padding:10px 7px;font-size:14px}.search button{padding:0 12px;font-size:13px}.section-head{margin-top:25px}.cards{grid-template-columns:1fr}.card p{min-height:auto}.how{grid-template-columns:1fr}.section-head p{font-size:12px}}
+    dialog{border:0;border-radius:20px;padding:0;width:min(480px,calc(100% - 28px));box-shadow:0 24px 80px #0004}dialog::backdrop{background:#06150f99}.modal{padding:23px}.modal-head{display:flex;justify-content:space-between;align-items:center;margin-bottom:17px}.modal-head h2{margin:0;font-size:20px}.close{border:0;background:#edf0e8;border-radius:50%;width:34px;height:34px;font-size:19px}.field{display:grid;gap:6px;margin:12px 0}.field label{font-size:12px;font-weight:750}.field input,.field select,.field textarea{border:1px solid #dce2da;border-radius:10px;padding:11px;outline-color:var(--green);background:white}.field textarea{resize:vertical;min-height:75px}.modal .primary{width:100%;padding:12px}.fine{color:var(--muted);font-size:11px;line-height:1.5;margin:10px 0 0}.app-switch{display:flex;gap:8px;margin:0 0 15px}.app-tab{border:1px solid var(--line);background:#fff;color:#4b5c53;border-radius:999px;padding:10px 16px;font-size:13px;font-weight:800}.app-tab.active{background:var(--ink);color:#fff;border-color:var(--ink)}.business-hero{background:linear-gradient(125deg,#174f3d,#10251f);border-radius:26px;padding:36px;color:#fff}.business-hero h1{font-size:clamp(30px,5vw,48px);line-height:1.06;max-width:680px;margin:12px 0}.business-hero p{color:#d4e0d9;max-width:680px;line-height:1.6}.business-actions{display:flex;gap:9px;flex-wrap:wrap;margin-top:20px}.business-actions .primary{flex:0 1 270px}.business-grid{display:grid;grid-template-columns:repeat(2,1fr);gap:13px}.business-card{background:white;border:1px solid var(--line);border-radius:16px;padding:18px;box-shadow:var(--shadow)}.business-card>span{font-size:26px}.business-card h3{font-size:16px;margin:10px 0 5px}.business-card p{color:var(--muted);font-size:13px;line-height:1.5;margin:0}.kind-label{font-size:10px;text-transform:uppercase;font-weight:850;color:var(--green);margin-right:3px}
+    @media(max-width:800px){.cards{grid-template-columns:repeat(2,1fr)}}@media(max-width:560px){.top{padding:13px 15px}.location{font-size:11px}.top button{padding:9px 12px;font-size:12px}main{padding:20px 14px 60px}.hero{padding:25px 19px;border-radius:20px}.hero h1{font-size:37px}.search{gap:3px}.search input{padding:10px 7px;font-size:14px}.search button{padding:0 12px;font-size:13px}.section-head{margin-top:25px}.cards,.business-grid{grid-template-columns:1fr}.card p{min-height:auto}.how{grid-template-columns:1fr}.section-head p{font-size:12px}.business-hero{padding:25px 19px;border-radius:20px}.business-hero h1{font-size:35px}.business-actions{flex-direction:column}.business-actions button{width:100%}.app-tab{padding:9px 13px;font-size:12px}}
   </style>
 </head>
 <body>
-  <header class="top"><div><div class="brand">Cerca<span>Cerca</span></div><div class="creator">Creada por A.V.G.</div><div class="location">Servicios cerca de <b id="placeLabel">Atlacomulco</b></div></div><button id="addBtn">＋ Registrar servicio</button></header>
+  <header class="top"><div><div class="brand">Cerca<span>Cerca</span></div><div class="creator">Creada por A.V.G.</div><div class="location">Negocios cerca de <b id="placeLabel">Atlacomulco</b></div></div><button id="addBtn" type="button">Soy negocio</button></header>
   <main>
-    <section class="hero"><div class="eyebrow">Directorio local · Atlacomulco</div><h1>Encuentra el servicio que necesitas.</h1><p>Explora categorías, revisa la zona y contacta directamente con quien ofrece el servicio. Confirma precio y disponibilidad antes de contratar.</p>
-      <div class="search"><input id="searchInput" type="search" placeholder="¿Qué servicio necesitas? Ej. plomería" aria-label="Buscar servicios"><button id="searchBtn">Buscar</button></div>
+    <nav class="app-switch" aria-label="Usar CercaCerca"><button class="app-tab active" type="button" data-screen="explore" aria-pressed="true">Explorar</button><button class="app-tab" type="button" data-screen="business" aria-pressed="false">Para negocios</button></nav>
+    <section id="exploreView">
+      <section class="hero"><div class="eyebrow">Compra y descubre cerca · Atlacomulco</div><h1>Lo que necesitas, más cerca.</h1><p>Encuentra productos, servicios y ofertas de negocios de tu comunidad. Contacta directamente y confirma disponibilidad antes de comprar.</p>
+        <div class="search"><input id="searchInput" type="search" placeholder="Busca un negocio, producto o servicio" aria-label="Buscar negocios, productos o servicios"><button id="searchBtn">Buscar</button></div>
+      </section>
+      <div class="section-head"><div><h2>Explora CercaCerca</h2><p id="listingSubtitle">Los perfiles y productos marcados como ejemplo son ficticios.</p></div></div>
+      <nav class="filters mode-filters" id="listingModes" aria-label="Tipo de publicación"><button class="chip active" type="button" data-kind="all" aria-pressed="true">Todo</button><button class="chip" type="button" data-kind="product" aria-pressed="false">Productos</button><button class="chip" type="button" data-kind="service" aria-pressed="false">Servicios</button><button class="chip" type="button" data-kind="offer" aria-pressed="false">Ofertas del día</button></nav>
+      <nav class="filters" id="filters" aria-label="Categorías"></nav>
+      <section class="cards" id="cards"></section>
+      <div class="section-head"><div><h2>¿Cómo funciona?</h2><p>Para quien compra y para quien ofrece</p></div></div>
+      <section class="how"><div class="step"><b>1. Explora</b><span>Busca productos, servicios y negocios de Atlacomulco.</span></div><div class="step"><b>2. Contacta o pide</b><span>Al inicio, los pedidos se confirman directamente con el negocio.</span></div><div class="step"><b>3. Vende cerca</b><span id="offerHelp">Los negocios podrán mostrar su catálogo y publicar ofertas del día.</span></div></section>
+      <div class="notice" id="modeNotice"><b>Prototipo:</b> los perfiles, productos y ofertas de ejemplo son ficticios. Los pedidos, pagos e inventario compartido aún no están conectados.</div>
     </section>
-    <div class="section-head"><div><h2>Servicios por categoría</h2><p id="listingSubtitle">Vista de demostración · los perfiles marcados como ejemplo son ficticios</p></div></div>
-    <nav class="filters" id="filters" aria-label="Categorías"></nav>
-    <section class="cards" id="cards"></section>
-    <div class="section-head"><div><h2>¿Cómo funciona?</h2><p>Fácil para quien busca y para quien ofrece</p></div></div>
-    <section class="how"><div class="step"><b>1. Busca</b><span>Filtra por oficio o servicio y encuentra opciones de tu zona.</span></div><div class="step"><b>2. Contacta</b><span>Habla directamente con la persona que ofrece el servicio.</span></div><div class="step"><b>3. Ofrece</b><span id="offerHelp">Prueba con una ficha local; solo aparece en tu navegador.</span></div></section>
-    <div class="notice" id="modeNotice"><b>Demostración:</b> las fichas de ejemplo son ficticias y no tienen contacto real. Las fichas que registres se guardan solo en este dispositivo. CercaCerca aún no verifica proveedores, no comparte perfiles entre teléfonos ni procesa pagos; confirma precio, referencias y disponibilidad antes de contratar.</div>
+    <section id="businessView" hidden><section class="business-hero"><div class="eyebrow">Para negocios locales</div><h1>Que te encuentren y te compren cerca.</h1><p>CercaCerca reunirá tu catálogo, tus servicios y tus ofertas del día en un solo perfil. La idea es empezar con pedidos directos y control sencillo del inventario.</p><div class="business-actions"><button class="primary" id="businessRegisterBtn" type="button">Registrar un servicio de prueba</button><button class="secondary" id="businessExploreBtn" type="button">Ver el lado del cliente</button></div></section><div class="section-head"><div><h2>Panel de negocio · vista previa</h2><p>Una sola app, con herramientas para vender y administrar</p></div></div><section class="business-grid"><article class="business-card"><span>🛍️</span><h3>Catálogo e inventario</h3><p>Mostrar productos, precios y existencias en un perfil de negocio.</p></article><article class="business-card"><span>📲</span><h3>Pedidos directos</h3><p>Recibir consultas o pedidos y confirmarlos por WhatsApp al comienzo.</p></article><article class="business-card"><span>🏷️</span><h3>Ofertas del día</h3><p>Publicar excedentes con descuento para ayudar a venderlos a tiempo.</p></article><article class="business-card"><span>📊</span><h3>Registro de ventas</h3><p>Registrar ventas y descontarlas del inventario cuando conectemos el panel.</p></article></section><div class="notice"><b>Vista previa:</b> los módulos de catálogo, ventas y pedidos todavía no guardan datos reales ni publican negocios automáticamente. Las fichas de servicios de prueba se pueden registrar desde el formulario actual.</div></section>
     <div class="footer">CercaCerca · Una idea que empieza en tu comunidad</div>
   </main>
   <dialog id="providerDialog"><form class="modal" id="providerForm"><div class="modal-head"><h2 id="providerTitle">Registra una ficha de prueba</h2><button type="button" class="close" id="closeDialog" aria-label="Cerrar">×</button></div>
@@ -45,7 +50,8 @@
   <dialog id="contactDialog"><div class="modal"><div class="modal-head"><h2 id="contactTitle">Contactar servicio</h2><button class="close" id="closeContact" aria-label="Cerrar">×</button></div><p id="contactText" style="color:#536159;line-height:1.55;font-size:14px"></p><p class="fine">CercaCerca no garantiza la calidad del servicio. Confirma directamente precio, disponibilidad y referencias antes de contratar.</p><button class="primary" id="contactOk">Entendido</button></div></dialog>
 <script src="./supabase-config.js"></script>
 <script>
-const categories=['Todos','Hogar','Reparaciones','Belleza','Automotriz','Clases','Otros'];
+const serviceCategories=['Hogar','Reparaciones','Belleza','Automotriz','Clases','Otros'];
+const categoriesByKind={all:['Todos',...serviceCategories,'Comida','Panadería','Frutas y verduras','Despensa'],product:['Todos','Comida','Panadería','Frutas y verduras','Despensa','Otros'],service:['Todos',...serviceCategories],offer:['Todos','Comida','Panadería','Frutas y verduras','Despensa','Otros']};
 const examples=[
  {name:'Servicio de plomería',service:'Reparaciones del hogar',category:'Hogar',zone:'Atlacomulco',icon:'🔧',desc:'Ficha ilustrativa; aún no corresponde a un proveedor real.',badge:'Ejemplo'},
  {name:'Servicio de mecánica',service:'Mantenimiento automotriz',category:'Automotriz',zone:'Atlacomulco',icon:'🚗',desc:'Ficha ilustrativa; aún no corresponde a un proveedor real.',badge:'Ejemplo'},
@@ -54,7 +60,12 @@ const examples=[
  {name:'Corte y peinado',service:'Belleza',category:'Belleza',zone:'Atlacomulco',icon:'✂️',desc:'Ficha ilustrativa; aún no corresponde a un proveedor real.',badge:'Ejemplo'},
  {name:'Limpieza del hogar',service:'Limpieza por horas',category:'Hogar',zone:'Atlacomulco',icon:'🧹',desc:'Ficha ilustrativa; aún no corresponde a un proveedor real.',badge:'Ejemplo'}
 ];
-let active='Todos';
+const commerceExamples=[
+ {id:'demo-fruit-basket',kind:'product',name:'Mercadito de ejemplo',service:'Canasta de fruta de temporada',category:'Frutas y verduras',zone:'Atlacomulco',icon:'🍎',desc:'Ejemplo ficticio. En la app real el negocio publicaría su disponibilidad y precio.',badge:'Ejemplo',price:85,hours:'Muestra · no disponible para compra'},
+ {id:'demo-pantry-basket',kind:'product',name:'Abarrotes de ejemplo',service:'Paquete básico de despensa',category:'Despensa',zone:'Atlacomulco',icon:'🛍️',desc:'Ejemplo ficticio de un producto que se podría pedir al negocio.',badge:'Ejemplo',price:180,hours:'Muestra · no disponible para compra'},
+ {id:'demo-bread-deal',kind:'offer',name:'Panadería de ejemplo',service:'Bolsa de pan del día',category:'Panadería',zone:'Atlacomulco',icon:'🥐',desc:'Oferta ficticia de cierre. Las ofertas reales se habilitarán con negocios participantes.',badge:'Ejemplo',price:45,hours:'Muestra · no disponible para compra'}
+];
+let active='Todos',activeKind='all',currentScreen='explore';
 const $=s=>document.querySelector(s);
 const backendConfig=window.CERCA_SUPABASE||{};
 const supabaseUrl=String(backendConfig.url||'').replace(/\/$/,'');
@@ -68,7 +79,7 @@ function setModeUI(){
  $('#providerSubmit').textContent=backendConfigured?'Enviar para revisión':'Guardar ficha de prueba';
  $('#providerNote').textContent=backendConfigured?'Tu ficha y teléfono no serán públicos hasta que se revisen y aprueben. Solo envía un número de negocio que tengas permiso de publicar.':'La ficha y el teléfono se guardan solo en este dispositivo; no se publican para otros usuarios. Usa únicamente un número profesional que aceptes compartir.';
  $('#offerHelp').textContent=backendConfigured?'Envía tu ficha; solo se mostrará cuando se apruebe.':'Prueba con una ficha local; solo aparece en tu navegador.';
- if(backendConfigured){$('#listingSubtitle').textContent='Fichas de negocios aprobadas; las nuevas propuestas pasan por revisión.';$('#modeNotice').innerHTML='<b>Directorio compartido:</b> aquí aparecen fichas aprobadas. Las nuevas solicitudes quedan privadas hasta que se revisen; no agregues datos de otra persona sin su permiso.';}
+ if(backendConfigured){$('#listingSubtitle').textContent='Servicios aprobados; los productos y ofertas de ejemplo son ficticios.';$('#modeNotice').innerHTML='<b>Directorio compartido:</b> los servicios visibles fueron aprobados. Los productos y ofertas marcados como ejemplo no están disponibles para compra.';}
 }
 async function loadSharedProviders(){
  if(!backendConfigured)return;
@@ -76,7 +87,7 @@ async function loadSharedProviders(){
   const response=await fetch(`${supabaseUrl}/rest/v1/providers?select=*&status=eq.approved&order=created_at.desc`,{headers:{apikey:supabaseKey,Authorization:`Bearer ${supabaseKey}`}});
   if(!response.ok)throw new Error('load_failed');
   const rows=await response.json();
-  sharedProviders=rows.map(x=>({id:x.id,name:x.display_name,service:x.service,category:x.category,zone:x.zone,phone:x.whatsapp,price:x.price_from_mxn,hours:x.hours,desc:x.description||'Servicio registrado por su proveedor.',badge:'Aprobado',custom:false,icon:iconForCategory(x.category)}));
+  sharedProviders=rows.map(x=>({id:x.id,kind:'service',name:x.display_name,service:x.service,category:x.category,zone:x.zone,phone:x.whatsapp,price:x.price_from_mxn,hours:x.hours,desc:x.description||'Servicio registrado por su proveedor.',badge:'Aprobado',custom:false,icon:iconForCategory(x.category)}));
   $('#modeNotice').innerHTML='<b>Directorio compartido:</b> las fichas visibles fueron aprobadas por administración. Aun así, confirma precio, disponibilidad y referencias directamente.';
   render();
  }catch(err){$('#modeNotice').innerHTML='<b>Directorio temporalmente no disponible.</b> No pudimos cargar las fichas compartidas. Inténtalo de nuevo más tarde.';}
@@ -86,32 +97,42 @@ const normalize=x=>String(x===null||x===undefined?'':x).normalize('NFD').replace
 const canonicalZone=x=>{const value=String(x||'Atlacomulco').trim();return ['tecoac','tlacomulco'].includes(normalize(value))?'Atlacomulco':value};
 function readLocal(key,fallback=''){try{const value=localStorage.getItem(key);return value===null?fallback:value}catch(err){return fallback}}
 function getCustom(){try{const data=JSON.parse(readLocal('cercacerca-profiles','[]'));if(!Array.isArray(data))return[];const valid=data.filter(x=>x&&typeof x==='object'&&x.name&&x.service&&x.category&&x.zone);const clean=valid.map(x=>({...x,zone:canonicalZone(x.zone)}));if(clean.some((x,i)=>x.zone!==valid[i].zone)){try{localStorage.setItem('cercacerca-profiles',JSON.stringify(clean))}catch(err){}}return clean}catch(err){return[]}}
+function renderModes(){document.querySelectorAll('#listingModes [data-kind]').forEach(b=>{const on=b.dataset.kind===activeKind;b.classList.toggle('active',on);b.setAttribute('aria-pressed',String(on))})}
 function renderFilters(){
- $('#filters').innerHTML=categories.map(c=>`<button class="chip ${active===c?'active':''}" data-category="${safe(c)}" aria-pressed="${active===c}">${safe(c)}</button>`).join('');
- $('#category').innerHTML=categories.filter(c=>c!=='Todos').map(c=>`<option value="${safe(c)}">${safe(c)}</option>`).join('');
+ const available=categoriesByKind[activeKind]||categoriesByKind.all;if(!available.includes(active))active='Todos';
+ $('#filters').innerHTML=available.map(c=>`<button class="chip ${active===c?'active':''}" data-category="${safe(c)}" aria-pressed="${active===c}">${safe(c)}</button>`).join('');
+ $('#category').innerHTML=serviceCategories.map(c=>`<option value="${safe(c)}">${safe(c)}</option>`).join('');
 }
 function render(){
  const q=normalize($('#searchInput').value);
- const custom=backendConfigured?[]:getCustom().map((x,i)=>({...x,id:x.id||`legacy-${i}`,custom:true}));
- const all=backendConfigured?sharedProviders:[...custom,...examples];
- const list=all.filter(x=>(active==='Todos'||x.category===active)&&(!q||normalize(`${x.name} ${x.service} ${x.category} ${x.zone} ${x.desc} ${x.hours||''} ${x.price||''}`).includes(q)));
+ const custom=backendConfigured?[]:getCustom().map((x,i)=>({...x,id:x.id||`legacy-${i}`,kind:x.kind||'service',custom:true}));
+ const directory=backendConfigured?sharedProviders:[...custom,...examples.map(x=>({...x,kind:'service'}))];
+ const all=[...directory,...commerceExamples];
+ const list=all.filter(x=>(activeKind==='all'||x.kind===activeKind)&&(active==='Todos'||x.category===active)&&(!q||normalize(`${x.name} ${x.service} ${x.category} ${x.zone} ${x.desc} ${x.hours||''} ${x.price||''}`).includes(q)));
  $('#cards').innerHTML=list.length?list.map(x=>{
    const phone=String(x.phone||'').replace(/\D/g,'');
-   const action=phone?`<a class="primary" href="https://wa.me/${phone}?text=${encodeURIComponent(`Hola, vi tu perfil en CercaCerca y quisiera información sobre ${x.service}.`)}" target="_blank" rel="noopener noreferrer">Contactar por WhatsApp</a>`:`<button type="button" class="primary contact" data-name="${safe(x.name)}" data-service="${safe(x.service)}">Ver ejemplo</button>`;
+   const typeLabel=x.kind==='product'?'Producto':x.kind==='offer'?'Oferta del día':'Servicio';
+   const action=phone?`<a class="primary" href="https://wa.me/${phone}?text=${encodeURIComponent(`Hola, vi tu perfil en CercaCerca y quisiera información sobre ${x.service}.`)}" target="_blank" rel="noopener noreferrer">Contactar por WhatsApp</a>`:`<button type="button" class="primary contact" data-name="${safe(x.name)}" data-service="${safe(x.service)}" data-kind="${safe(x.kind||'service')}">Ver ejemplo</button>`;
    const remove=x.custom?`<button type="button" class="secondary delete-profile" data-id="${safe(x.id)}" aria-label="Eliminar perfil de ${safe(x.name)}">Eliminar</button>`:'';
-   return `<article class="card"><div class="card-top"><div class="avatar" aria-hidden="true">${safe(x.icon||'✨')}</div><div><h3>${safe(x.name)}</h3><div class="tagline">${safe(x.service)}</div></div><span class="badge">${x.custom?'Ficha local':safe(x.badge)}</span></div><p>${safe(x.desc||'Servicio disponible en tu zona.')}</p><div class="meta"><span>📍 ${safe(x.zone)}</span><span>${safe(x.category)}</span></div>${x.price||x.hours?`<div class="meta"><span>${x.price?`Desde $${safe(x.price)} MXN`:''}</span><span>${safe(x.hours||'')}</span></div>`:''}<div class="card-actions">${action}${remove}</div></article>`;
- }).join(''):`<div class="empty" role="status">${backendConfigured&&!sharedProviders.length?'Aún no hay fichas aprobadas en el directorio. Puedes registrar un servicio para revisión.':'No encontramos coincidencias. Prueba otra búsqueda o categoría.'}</div>`;
+   const priceLabel=x.price?`${x.kind==='offer'?'Oferta desde':'Desde'} $${safe(x.price)} MXN`:'';
+   return `<article class="card"><div class="card-top"><div class="avatar" aria-hidden="true">${safe(x.icon||'✨')}</div><div><h3>${safe(x.name)}</h3><div class="tagline"><span class="kind-label">${typeLabel}</span> · ${safe(x.service)}</div></div><span class="badge">${x.custom?'Ficha local':safe(x.badge)}</span></div><p>${safe(x.desc||'Disponible en tu zona.')}</p><div class="meta"><span>📍 ${safe(x.zone)}</span><span>${safe(x.category)}</span></div>${x.price||x.hours?`<div class="meta"><span>${priceLabel}</span><span>${safe(x.hours||'')}</span></div>`:''}<div class="card-actions">${action}${remove}</div></article>`;
+ }).join(''):`<div class="empty" role="status">${backendConfigured&&!sharedProviders.length&&activeKind==='service'?'Aún no hay fichas aprobadas en el directorio. Puedes registrar un servicio para revisión.':'No encontramos coincidencias. Prueba otra búsqueda o categoría.'}</div>`;
 }
-setModeUI();renderFilters();render();$('#placeLabel').textContent='Atlacomulco';loadSharedProviders();
+function switchScreen(name){currentScreen=name;$('#exploreView').hidden=name!=='explore';$('#businessView').hidden=name!=='business';document.querySelectorAll('.app-tab').forEach(b=>{const on=b.dataset.screen===name;b.classList.toggle('active',on);b.setAttribute('aria-pressed',String(on))});$('#addBtn').textContent=name==='business'?'Explorar':'Soy negocio';window.scrollTo({top:0,behavior:'smooth'})}
+setModeUI();renderModes();renderFilters();render();$('#placeLabel').textContent='Atlacomulco';loadSharedProviders();
+document.querySelectorAll('.app-tab').forEach(b=>b.addEventListener('click',()=>switchScreen(b.dataset.screen)));
+$('#listingModes').addEventListener('click',e=>{const b=e.target.closest('[data-kind]');if(!b)return;activeKind=b.dataset.kind;active='Todos';renderModes();renderFilters();render()});
 $('#filters').addEventListener('click',e=>{const b=e.target.closest('[data-category]');if(!b)return;active=b.dataset.category;renderFilters();render()});
 $('#searchBtn').addEventListener('click',render);$('#searchInput').addEventListener('input',render);
-$('#addBtn').addEventListener('click',()=>$('#providerDialog').showModal());
+$('#addBtn').addEventListener('click',()=>switchScreen(currentScreen==='business'?'explore':'business'));
+$('#businessExploreBtn').addEventListener('click',()=>switchScreen('explore'));
+$('#businessRegisterBtn').addEventListener('click',()=>$('#providerDialog').showModal());
 $('#closeDialog').addEventListener('click',()=>$('#providerDialog').close());
 $('#closeContact').addEventListener('click',()=>$('#contactDialog').close());
 $('#contactOk').addEventListener('click',()=>$('#contactDialog').close());
 $('#cards').addEventListener('click',e=>{
  const contact=e.target.closest('.contact');
- if(contact){$('#contactTitle').textContent=contact.dataset.name;$('#contactText').textContent=`Te interesa: ${contact.dataset.service}. Este perfil es de muestra y no tiene un contacto real.`;$('#contactDialog').showModal();return;}
+ if(contact){const kind=contact.dataset.kind==='product'?'producto':contact.dataset.kind==='offer'?'oferta del día':'servicio';$('#contactTitle').textContent=contact.dataset.name;$('#contactText').textContent=`${contact.dataset.service}: este ${kind} es solo un ejemplo ficticio y no está disponible para compra ni contacto. En la versión real, aquí podrás consultar o pedir al negocio.`;$('#contactDialog').showModal();return;}
  const del=e.target.closest('.delete-profile');
  if(del&&confirm('¿Eliminar este perfil de este dispositivo?')){
    const remaining=getCustom().filter((x,i)=>(x.id||`legacy-${i}`)!==del.dataset.id);
@@ -143,6 +164,6 @@ $('#providerForm').addEventListener('submit',async e=>{
  catch(err){alert('No se pudo guardar en este dispositivo. Revisa el espacio disponible del navegador e inténtalo otra vez.');return;}
  $('#placeLabel').textContent='Atlacomulco';$('#providerDialog').close();e.target.reset();active='Todos';renderFilters();render();window.scrollTo({top:document.querySelector('.section-head').offsetTop-80,behavior:'smooth'});
 });
-if('serviceWorker'in navigator)window.addEventListener('load',()=>navigator.serviceWorker.register('./sw.js').catch(()=>{}));
+if('serviceWorker'in navigator)window.addEventListener('load',()=>navigator.serviceWorker.register('./sw.js?v=7',{updateViaCache:'none'}).catch(()=>{}));
 </script>
 </body></html>

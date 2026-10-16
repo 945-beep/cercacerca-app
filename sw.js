@@ -1,4 +1,4 @@
-const CACHE = 'cercacerca-demo-v5';
+const CACHE = 'cercacerca-demo-v7';
 const FILES = [
   './',
   './index.html',
