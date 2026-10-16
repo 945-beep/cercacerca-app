@@ -30,7 +30,7 @@
       <section class="cards" id="cards"></section>
       <div class="section-head"><div><h2>¿Cómo funciona?</h2><p>Para quien compra y para quien ofrece</p></div></div>
       <section class="how"><div class="step"><b>1. Explora</b><span>Busca productos, servicios y negocios de Atlacomulco.</span></div><div class="step"><b>2. Contacta o pide</b><span>Al inicio, los pedidos se confirman directamente con el negocio.</span></div><div class="step"><b>3. Vende cerca</b><span id="offerHelp">Los negocios podrán mostrar su catálogo y publicar ofertas del día.</span></div></section>
-      <div class="notice" id="modeNotice"><b>Prototipo:</b> los perfiles, productos y ofertas de ejemplo son ficticios. Los pedidos, pagos e inventario compartido aún no están conectados.</div>
+      <div class="notice" id="modeNotice"><b>Prototipo:</b> los perfiles, productos y ofertas de ejemplo son ficticios. Los productos del catálogo se solicitan por WhatsApp y el vendedor confirma y registra manualmente la venta. No hay checkout ni pagos.</div>
     </section>
     <section id="businessView" hidden><section class="business-hero"><div class="eyebrow">Para negocios locales</div><h1>Que te encuentren y te compren cerca.</h1><p>CercaCerca reunirá tu catálogo, tus servicios y tus ofertas del día en un solo perfil. La idea es empezar con pedidos directos y control sencillo del inventario.</p><div class="business-actions"><button class="primary" id="businessRegisterBtn" type="button">Registrar un servicio de prueba</button><button class="secondary" id="businessExploreBtn" type="button">Ver el lado del cliente</button></div></section><div class="section-head"><div><h2>Panel de negocio · vista previa</h2><p>Una sola app, con herramientas para vender y administrar</p></div></div><section class="business-grid"><article class="business-card"><span>🛍️</span><h3>Catálogo e inventario</h3><p>Mostrar productos, precios y existencias en un perfil de negocio.</p></article><article class="business-card"><span>📲</span><h3>Pedidos directos</h3><p>Recibir consultas o pedidos y confirmarlos por WhatsApp al comienzo.</p></article><article class="business-card"><span>🏷️</span><h3>Ofertas del día</h3><p>Publicar excedentes con descuento para ayudar a venderlos a tiempo.</p></article><article class="business-card"><span>📊</span><h3>Registro de ventas</h3><p>Registrar ventas y descontarlas del inventario cuando conectemos el panel.</p></article></section><div class="notice"><b>Vista previa:</b> los módulos de catálogo, ventas y pedidos todavía no guardan datos reales ni publican negocios automáticamente. Las fichas de servicios de prueba se pueden registrar desde el formulario actual.</div></section>
     <div class="footer">CercaCerca · Una idea que empieza en tu comunidad</div>
@@ -71,7 +71,7 @@ const backendConfig=window.CERCA_SUPABASE||{};
 const supabaseUrl=String(backendConfig.url||'').replace(/\/$/,'');
 const supabaseKey=String(backendConfig.anonKey||'');
 const backendConfigured=/^https:\/\/[a-z0-9-]+\.supabase\.co$/i.test(supabaseUrl)&&supabaseKey.length>20;
-let sharedProviders=[];
+let sharedProviders=[],sharedProducts=[],catalogUnavailable=false;
 function iconForCategory(category){return ({Hogar:'🏠',Reparaciones:'🔧',Belleza:'✂️',Automotriz:'🚗',Clases:'📚',Otros:'✨'})[category]||'✨'}
 function setModeUI(){
  $('#consentField').hidden=!backendConfigured;$('#publicConsent').required=backendConfigured;
@@ -79,7 +79,7 @@ function setModeUI(){
  $('#providerSubmit').textContent=backendConfigured?'Enviar para revisión':'Guardar ficha de prueba';
  $('#providerNote').textContent=backendConfigured?'Tu ficha y teléfono no serán públicos hasta que se revisen y aprueben. Solo envía un número de negocio que tengas permiso de publicar.':'La ficha y el teléfono se guardan solo en este dispositivo; no se publican para otros usuarios. Usa únicamente un número profesional que aceptes compartir.';
  $('#offerHelp').textContent=backendConfigured?'Envía tu ficha; solo se mostrará cuando se apruebe.':'Prueba con una ficha local; solo aparece en tu navegador.';
- if(backendConfigured){$('#listingSubtitle').textContent='Servicios aprobados; los productos y ofertas de ejemplo son ficticios.';$('#modeNotice').innerHTML='<b>Directorio compartido:</b> los servicios visibles fueron aprobados. Los productos y ofertas marcados como ejemplo no están disponibles para compra.';}
+ if(backendConfigured){$('#listingSubtitle').textContent='Servicios y productos publicados con aprobación; los ejemplos siguen siendo ficticios.';$('#modeNotice').innerHTML='<b>Piloto:</b> los productos aprobados muestran existencias y contacto por WhatsApp. El cliente solicita; el negocio confirma manualmente y registra la venta. No hay checkout, pagos ni apartado automático.';}
 }
 async function loadSharedProviders(){
  if(!backendConfigured)return;
@@ -88,10 +88,11 @@ async function loadSharedProviders(){
   if(!response.ok)throw new Error('load_failed');
   const rows=await response.json();
   sharedProviders=rows.map(x=>({id:x.id,kind:'service',name:x.display_name,service:x.service,category:x.category,zone:x.zone,phone:x.whatsapp,price:x.price_from_mxn,hours:x.hours,desc:x.description||'Servicio registrado por su proveedor.',badge:'Aprobado',custom:false,icon:iconForCategory(x.category)}));
-  $('#modeNotice').innerHTML='<b>Directorio compartido:</b> las fichas visibles fueron aprobadas por administración. Aun así, confirma precio, disponibilidad y referencias directamente.';
+  $('#modeNotice').innerHTML=catalogUnavailable?'<b>Catálogo de productos temporalmente no disponible.</b> La app sigue mostrando servicios y ejemplos; intenta de nuevo más tarde.':'<b>Piloto:</b> servicios aprobados y catálogo moderado. Para productos, confirma existencias por WhatsApp; tú y el comercio acuerdan manualmente y el vendedor registra la venta en Rescate del Día. No hay pagos ni apartado automático.';
   render();
  }catch(err){$('#modeNotice').innerHTML='<b>Directorio temporalmente no disponible.</b> No pudimos cargar las fichas compartidas. Inténtalo de nuevo más tarde.';}
 }
+async function loadCatalogProducts(){if(!backendConfigured)return;try{const url=`${supabaseUrl}/rest/v1/catalog_products?select=business_name,product_name,category,zone,whatsapp,price_mxn,available_stock,unit,description,status&status=eq.approved&available_stock=gt.0&order=updated_at.desc`;const response=await fetch(url,{headers:{apikey:supabaseKey,Authorization:`Bearer ${supabaseKey}`}});if(!response.ok)throw new Error('catalog_unavailable');const rows=await response.json();sharedProducts=rows.filter(x=>x.status==='approved'&&Number(x.available_stock)>0).map(x=>({id:`catalog-${x.business_name}-${x.product_name}`,kind:'product',name:x.business_name,service:x.product_name,category:x.category,zone:x.zone,phone:x.whatsapp,price:x.price_mxn,unit:x.unit,stock:Number(x.available_stock),desc:x.description||'Producto ofrecido por un negocio local.',badge:'Aprobado',icon:'🛍️'}));catalogUnavailable=false;render();}catch(err){sharedProducts=[];catalogUnavailable=true;render();const notice=$('#modeNotice');notice.innerHTML='<b>Catálogo de productos temporalmente no disponible.</b> La app sigue mostrando servicios y ejemplos; intenta de nuevo más tarde.';}}
 const safe=x=>String(x===null||x===undefined?'':x).replace(/[&<>"']/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]));
 const normalize=x=>String(x===null||x===undefined?'':x).normalize('NFD').replace(/[\u0300-\u036f]/g,'').toLowerCase().trim();
 const canonicalZone=x=>{const value=String(x||'Atlacomulco').trim();return ['tecoac','tlacomulco'].includes(normalize(value))?'Atlacomulco':value};
@@ -107,19 +108,19 @@ function render(){
  const q=normalize($('#searchInput').value);
  const custom=backendConfigured?[]:getCustom().map((x,i)=>({...x,id:x.id||`legacy-${i}`,kind:x.kind||'service',custom:true}));
  const directory=backendConfigured?sharedProviders:[...custom,...examples.map(x=>({...x,kind:'service'}))];
- const all=[...directory,...commerceExamples];
+ const all=[...directory,...sharedProducts,...commerceExamples];
  const list=all.filter(x=>(activeKind==='all'||x.kind===activeKind)&&(active==='Todos'||x.category===active)&&(!q||normalize(`${x.name} ${x.service} ${x.category} ${x.zone} ${x.desc} ${x.hours||''} ${x.price||''}`).includes(q)));
  $('#cards').innerHTML=list.length?list.map(x=>{
    const phone=String(x.phone||'').replace(/\D/g,'');
    const typeLabel=x.kind==='product'?'Producto':x.kind==='offer'?'Oferta del día':'Servicio';
-   const action=phone?`<a class="primary" href="https://wa.me/${phone}?text=${encodeURIComponent(`Hola, vi tu perfil en CercaCerca y quisiera información sobre ${x.service}.`)}" target="_blank" rel="noopener noreferrer">Contactar por WhatsApp</a>`:`<button type="button" class="primary contact" data-name="${safe(x.name)}" data-service="${safe(x.service)}" data-kind="${safe(x.kind||'service')}">Ver ejemplo</button>`;
+   const waText=x.kind==='product'?`Hola, vi ${x.service} de ${x.name} en CercaCerca. ¿Sigue disponible? Confirmo contigo antes de comprar.`:`Hola, vi tu perfil en CercaCerca y quisiera información sobre ${x.service}.`;const action=phone?`<a class="primary" href="https://wa.me/${phone}?text=${encodeURIComponent(waText)}" target="_blank" rel="noopener noreferrer">Contactar por WhatsApp</a>`:`<button type="button" class="primary contact" data-name="${safe(x.name)}" data-service="${safe(x.service)}" data-kind="${safe(x.kind||'service')}">Ver ejemplo</button>`;
    const remove=x.custom?`<button type="button" class="secondary delete-profile" data-id="${safe(x.id)}" aria-label="Eliminar perfil de ${safe(x.name)}">Eliminar</button>`:'';
-   const priceLabel=x.price?`${x.kind==='offer'?'Oferta desde':'Desde'} $${safe(x.price)} MXN`:'';
-   return `<article class="card"><div class="card-top"><div class="avatar" aria-hidden="true">${safe(x.icon||'✨')}</div><div><h3>${safe(x.name)}</h3><div class="tagline"><span class="kind-label">${typeLabel}</span> · ${safe(x.service)}</div></div><span class="badge">${x.custom?'Ficha local':safe(x.badge)}</span></div><p>${safe(x.desc||'Disponible en tu zona.')}</p><div class="meta"><span>📍 ${safe(x.zone)}</span><span>${safe(x.category)}</span></div>${x.price||x.hours?`<div class="meta"><span>${priceLabel}</span><span>${safe(x.hours||'')}</span></div>`:''}<div class="card-actions">${action}${remove}</div></article>`;
+   const priceLabel=x.price?(x.kind==='product'?`$${safe(x.price)} MXN`:x.kind==='offer'?`Oferta desde $${safe(x.price)} MXN`:`Desde $${safe(x.price)} MXN`):'';
+   return `<article class="card"><div class="card-top"><div class="avatar" aria-hidden="true">${safe(x.icon||'✨')}</div><div><h3>${safe(x.name)}</h3><div class="tagline"><span class="kind-label">${typeLabel}</span> · ${safe(x.service)}${x.kind==='product'&&x.unit?` (${safe(x.unit)})`:''}</div></div><span class="badge">${x.custom?'Ficha local':safe(x.badge)}</span></div><p>${safe(x.desc||'Disponible en tu zona.')}</p><div class="meta"><span>📍 ${safe(x.zone)}</span><span>${safe(x.category)}</span></div>${x.price||x.hours||x.stock?`<div class="meta"><span>${priceLabel}</span><span>${x.stock?`Disponibles: ${safe(x.stock)} ${safe(x.unit)}`:safe(x.hours||'')}</span></div>`:''}<div class="card-actions">${action}${remove}</div></article>`;
  }).join(''):`<div class="empty" role="status">${backendConfigured&&!sharedProviders.length&&activeKind==='service'?'Aún no hay fichas aprobadas en el directorio. Puedes registrar un servicio para revisión.':'No encontramos coincidencias. Prueba otra búsqueda o categoría.'}</div>`;
 }
 function switchScreen(name){currentScreen=name;$('#exploreView').hidden=name!=='explore';$('#businessView').hidden=name!=='business';document.querySelectorAll('.app-tab').forEach(b=>{const on=b.dataset.screen===name;b.classList.toggle('active',on);b.setAttribute('aria-pressed',String(on))});$('#addBtn').textContent=name==='business'?'Explorar':'Soy negocio';window.scrollTo({top:0,behavior:'smooth'})}
-setModeUI();renderModes();renderFilters();render();$('#placeLabel').textContent='Atlacomulco';loadSharedProviders();
+setModeUI();renderModes();renderFilters();render();$('#placeLabel').textContent='Atlacomulco';loadSharedProviders();loadCatalogProducts();
 document.querySelectorAll('.app-tab').forEach(b=>b.addEventListener('click',()=>switchScreen(b.dataset.screen)));
 $('#listingModes').addEventListener('click',e=>{const b=e.target.closest('[data-kind]');if(!b)return;activeKind=b.dataset.kind;active='Todos';renderModes();renderFilters();render()});
 $('#filters').addEventListener('click',e=>{const b=e.target.closest('[data-category]');if(!b)return;active=b.dataset.category;renderFilters();render()});
@@ -164,6 +165,6 @@ $('#providerForm').addEventListener('submit',async e=>{
  catch(err){alert('No se pudo guardar en este dispositivo. Revisa el espacio disponible del navegador e inténtalo otra vez.');return;}
  $('#placeLabel').textContent='Atlacomulco';$('#providerDialog').close();e.target.reset();active='Todos';renderFilters();render();window.scrollTo({top:document.querySelector('.section-head').offsetTop-80,behavior:'smooth'});
 });
-if('serviceWorker'in navigator)window.addEventListener('load',()=>navigator.serviceWorker.register('./sw.js?v=7',{updateViaCache:'none'}).catch(()=>{}));
+if('serviceWorker'in navigator)window.addEventListener('load',()=>navigator.serviceWorker.register('./sw.js?v=8',{updateViaCache:'none'}).catch(()=>{}));
 </script>
 </body></html>

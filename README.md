@@ -1,18 +1,14 @@
-# CercaCerca — prototipo público
+# CercaCerca — catálogo público piloto
 
-Prototipo local para descubrir productos, servicios y ofertas en Atlacomulco, con una vista inicial para clientes y otra para negocios. Pensado como PWA instalable en Android.
+Prototipo local para descubrir productos y servicios de negocios de Atlacomulco, con una vista inicial para clientes y otra para negocios. PWA instalable en Android.
 
-## Funciona en la demo actual
-- Búsqueda que ignora acentos, filtros por tipo (productos, servicios y ofertas), por categoría y estado sin resultados.
-- Ejemplos ficticios de productos y ofertas claramente marcados; no incluyen negocios reales ni teléfonos.
-- Alta y eliminación de fichas locales; cada ficha puede incluir precio aproximado y horario.
-- Las fichas de servicios aprobadas pueden contactar por WhatsApp al pulsar el botón; se agrega la lada 52 a números mexicanos de 10 dígitos.
-- Iconos PWA y cache básico para uso sin conexión.
+## Funciona
+- Búsqueda y filtros por tipo y categoría; ejemplos ficticios identificados.
+- Perfiles de servicios aprobados y lectura pública de productos del catálogo aprobados con existencias positivas.
+- Las fichas de producto muestran negocio, producto, categoría, precio, unidad, existencias y contacto por WhatsApp.
+- Flujo piloto manual: el cliente pregunta por WhatsApp; el vendedor confirma disponibilidad y registra la venta en Rescate del Día. No hay checkout, pagos ni apartados automáticos.
+- La tabla `catalog_products` mantiene ocultos los identificadores privados y los productos no aprobados. Si la tabla no está disponible, el directorio de servicios y ejemplos sigue funcionando y presenta un aviso.
+- Guía de configuración y revisión: `supabase/SETUP.md`.
 
-## Preparación para el directorio compartido
-Hay un esquema inicial de Supabase en `schema.sql`. Cuando se conecte un proyecto, las propuestas de servicio quedarán privadas como `pending` y solo las fichas revisadas manualmente podrán aparecer en público. La integración requiere URL del proyecto y clave pública anon/publishable. Nunca poner una `service_role` key en la web. Guía: `SETUP.md`.
-
-El sitio todavía no tiene un proyecto Supabase conectado; hasta entonces, las fichas creadas por visitantes solo se guardan en su navegador y los ejemplos ficticios permanecen visibles. La vista «Para negocios» es una maqueta inicial: catálogo de productos, ventas, pedidos compartidos y ofertas reales aún no están conectados.
-
-## Límites
-No hay verificación automática de proveedores, moderación integrada, reseñas, sincronización activa de inventario, registro de ventas, pedidos reales ni pagos. No se agregan negocios ni teléfonos reales sin permiso expreso. Confirma precio, disponibilidad y referencias antes de contratar.
+## Seguridad y consentimiento
+Los servicios y productos reales no se publican automáticamente. Cada producto necesita consentimiento explícito y aprobación administrativa manual. El navegador no puede aprobar fichas. No introducir claves `service_role` en el frontend. Los ejemplos demo son ficticios.
