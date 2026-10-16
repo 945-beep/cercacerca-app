@@ -11,4 +11,4 @@ Prototipo local para descubrir productos y servicios de negocios de Atlacomulco,
 - Guía de configuración y revisión: `supabase/SETUP.md`.
 
 ## Seguridad y consentimiento
-Los servicios y productos reales no se publican automáticamente. Cada producto necesita consentimiento explícito y aprobación administrativa manual. El navegador no puede aprobar fichas. No introducir claves `service_role` en el frontend. Los ejemplos demo son ficticios.
+Los servicios y productos reales no se publican automáticamente. Cada negocio debe activar expresamente su designación como vendedor de productos; cada producto además necesita consentimiento explícito y aprobación administrativa manual. Los perfiles de servicio (incluido el Autolavado) no son elegibles para el catálogo de productos. El navegador no puede aprobar fichas. No introducir claves `service_role` en el frontend. Los ejemplos demo son ficticios.
