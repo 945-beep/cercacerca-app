@@ -16,12 +16,16 @@ create table if not exists public.catalog_products (
   available_stock integer not null default 0 check (available_stock >= 0),
   unit text not null check (char_length(unit) between 1 and 20),
   description text check (description is null or char_length(description) <= 240),
+  product_seller_opt_in boolean not null default false,
   public_consent boolean not null default false check (public_consent = true),
   status text not null default 'pending' check (status in ('pending','approved','rejected')),
   created_at timestamptz not null default now(),
   updated_at timestamptz not null default now(),
   unique (owner_id, inventory_product_id)
 );
+
+-- Safe upgrade for an existing catalog table: legacy rows remain ineligible by default.
+alter table public.catalog_products add column if not exists product_seller_opt_in boolean not null default false;
 
 create index if not exists catalog_products_public_idx
   on public.catalog_products (status, category, zone)
@@ -31,26 +35,39 @@ alter table public.catalog_products enable row level security;
 
 do $$
 begin
-  if not exists (select 1 from pg_policies where schemaname = 'public' and tablename = 'catalog_products' and policyname = 'catalog products public approved read') then
+  if exists (select 1 from pg_policies where schemaname = 'public' and tablename = 'catalog_products' and policyname = 'catalog products public approved read') then
+    alter policy "catalog products public approved read" on public.catalog_products
+      using (status = 'approved' and available_stock > 0 and product_seller_opt_in = true);
+  else
     create policy "catalog products public approved read"
       on public.catalog_products for select to anon
-      using (status = 'approved' and available_stock > 0);
+      using (status = 'approved' and available_stock > 0 and product_seller_opt_in = true);
   end if;
-  if not exists (select 1 from pg_policies where schemaname = 'public' and tablename = 'catalog_products' and policyname = 'catalog products authenticated read') then
+  if exists (select 1 from pg_policies where schemaname = 'public' and tablename = 'catalog_products' and policyname = 'catalog products authenticated read') then
+    alter policy "catalog products authenticated read" on public.catalog_products
+      using ((status = 'approved' and available_stock > 0 and product_seller_opt_in = true) or owner_id = auth.uid());
+  else
     create policy "catalog products authenticated read"
       on public.catalog_products for select to authenticated
-      using ((status = 'approved' and available_stock > 0) or owner_id = auth.uid());
+      using ((status = 'approved' and available_stock > 0 and product_seller_opt_in = true) or owner_id = auth.uid());
   end if;
-  if not exists (select 1 from pg_policies where schemaname = 'public' and tablename = 'catalog_products' and policyname = 'catalog products owner insert pending') then
+  if exists (select 1 from pg_policies where schemaname = 'public' and tablename = 'catalog_products' and policyname = 'catalog products owner insert pending') then
+    alter policy "catalog products owner insert pending" on public.catalog_products
+      with check (owner_id = auth.uid() and product_seller_opt_in = true and public_consent = true and status = 'pending');
+  else
     create policy "catalog products owner insert pending"
       on public.catalog_products for insert to authenticated
-      with check (owner_id = auth.uid() and public_consent = true and status = 'pending');
+      with check (owner_id = auth.uid() and product_seller_opt_in = true and public_consent = true and status = 'pending');
   end if;
-  if not exists (select 1 from pg_policies where schemaname = 'public' and tablename = 'catalog_products' and policyname = 'catalog products owner update') then
+  if exists (select 1 from pg_policies where schemaname = 'public' and tablename = 'catalog_products' and policyname = 'catalog products owner update') then
+    alter policy "catalog products owner update" on public.catalog_products
+      using (owner_id = auth.uid())
+      with check (owner_id = auth.uid() and product_seller_opt_in = true and public_consent = true);
+  else
     create policy "catalog products owner update"
       on public.catalog_products for update to authenticated
       using (owner_id = auth.uid())
-      with check (owner_id = auth.uid() and public_consent = true);
+      with check (owner_id = auth.uid() and product_seller_opt_in = true and public_consent = true);
   end if;
   if not exists (select 1 from pg_policies where schemaname = 'public' and tablename = 'catalog_products' and policyname = 'catalog products owner delete') then
     create policy "catalog products owner delete"
@@ -61,12 +78,12 @@ end;
 $$;
 
 revoke all on public.catalog_products from anon, authenticated;
-grant select (id, business_name, product_name, category, zone, whatsapp, price_mxn, available_stock, unit, description, status, updated_at)
+grant select (id, business_name, product_name, category, zone, whatsapp, price_mxn, available_stock, unit, description, status, product_seller_opt_in, updated_at)
   on public.catalog_products to anon;
 grant select on public.catalog_products to authenticated;
-grant insert (owner_id, inventory_product_id, business_id, business_name, product_name, category, zone, whatsapp, price_mxn, available_stock, unit, description, public_consent)
+grant insert (owner_id, inventory_product_id, business_id, business_name, product_name, category, zone, whatsapp, price_mxn, available_stock, unit, description, product_seller_opt_in, public_consent)
   on public.catalog_products to authenticated;
-grant update (business_id, business_name, product_name, category, zone, whatsapp, price_mxn, available_stock, unit, description, public_consent)
+grant update (business_id, business_name, product_name, category, zone, whatsapp, price_mxn, available_stock, unit, description, product_seller_opt_in, public_consent)
   on public.catalog_products to authenticated;
 grant delete on public.catalog_products to authenticated;
 
