@@ -10,7 +10,7 @@ CercaCerca y Rescate del Día usan el mismo proyecto Supabase. La tabla `provide
 
 ## Publicación y venta manual
 - La designación de vendedor de productos es por negocio y está desactivada por defecto; los perfiles de servicio como Autolavado no son elegibles. Cada producto permanece privado hasta que su dueño activa la designación, pulsa «Publicar en CercaCerca» y acepta expresamente mostrar nombre del negocio, producto, categoría, zona, precio, existencias disponibles y WhatsApp.
-- La solicitud se crea con estado `pending`. La cuenta del dueño no puede cambiar el estado; una persona administradora debe aprobarla manualmente desde Supabase.
+- El bot de reglas aprueba automáticamente solo categorías Panadería, Comida y Frutas y verduras con consentimiento, precio y stock positivos, negocio habilitado y sin términos restringidos. La categoría Otros y los casos dudosos quedan `pending`; la cuenta del dueño no puede cambiar el estado y administración los revisa manualmente.
 - Al ajustar existencias en Rescate del Día, se sincronizan las existencias disponibles del catálogo descontando las cantidades comprometidas en ofertas activas. El catálogo público oculta productos con cero existencias.
 - El cliente inicia una consulta por WhatsApp. El negocio confirma manualmente y registra la venta como «Salida / venta» en Rescate del Día. No hay checkout, pago ni reserva automática.
 - El WhatsApp se configura por negocio y queda vacío por defecto. Solo se publica para los productos que el dueño autoriza.

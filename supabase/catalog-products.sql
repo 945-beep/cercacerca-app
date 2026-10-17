@@ -1,6 +1,6 @@
 -- Catálogo público de productos vinculado al inventario privado de Rescate del Día.
 -- Ejecutar en el SQL Editor del mismo proyecto Supabase usado por ambas apps.
--- Las filas nuevas quedan pendientes; un administrador debe aprobarlas manualmente.
+-- Un bot de reglas puede aprobar categorías permitidas; otros casos quedan pendientes para revisión manual.
 
 create table if not exists public.catalog_products (
   id uuid primary key default gen_random_uuid(),
@@ -37,37 +37,47 @@ do $$
 begin
   if exists (select 1 from pg_policies where schemaname = 'public' and tablename = 'catalog_products' and policyname = 'catalog products public approved read') then
     alter policy "catalog products public approved read" on public.catalog_products
-      using (status = 'approved' and available_stock > 0 and product_seller_opt_in = true);
+      using (status = 'approved' and available_stock > 0 and product_seller_opt_in = true
+        and lower(business_name) not like '%autolavado%' and lower(business_id) not like '%autolavado%');
   else
     create policy "catalog products public approved read"
       on public.catalog_products for select to anon
-      using (status = 'approved' and available_stock > 0 and product_seller_opt_in = true);
+      using (status = 'approved' and available_stock > 0 and product_seller_opt_in = true
+        and lower(business_name) not like '%autolavado%' and lower(business_id) not like '%autolavado%');
   end if;
   if exists (select 1 from pg_policies where schemaname = 'public' and tablename = 'catalog_products' and policyname = 'catalog products authenticated read') then
     alter policy "catalog products authenticated read" on public.catalog_products
-      using ((status = 'approved' and available_stock > 0 and product_seller_opt_in = true) or owner_id = auth.uid());
+      using ((status = 'approved' and available_stock > 0 and product_seller_opt_in = true
+        and lower(business_name) not like '%autolavado%' and lower(business_id) not like '%autolavado%') or owner_id = auth.uid());
   else
     create policy "catalog products authenticated read"
       on public.catalog_products for select to authenticated
-      using ((status = 'approved' and available_stock > 0 and product_seller_opt_in = true) or owner_id = auth.uid());
+      using ((status = 'approved' and available_stock > 0 and product_seller_opt_in = true
+        and lower(business_name) not like '%autolavado%' and lower(business_id) not like '%autolavado%') or owner_id = auth.uid());
   end if;
   if exists (select 1 from pg_policies where schemaname = 'public' and tablename = 'catalog_products' and policyname = 'catalog products owner insert pending') then
     alter policy "catalog products owner insert pending" on public.catalog_products
-      with check (owner_id = auth.uid() and product_seller_opt_in = true and public_consent = true and status = 'pending');
+      with check (owner_id = auth.uid() and product_seller_opt_in = true and public_consent = true
+        and lower(business_name) not like '%autolavado%' and lower(business_id) not like '%autolavado%'
+        and status in ('pending','approved'));
   else
     create policy "catalog products owner insert pending"
       on public.catalog_products for insert to authenticated
-      with check (owner_id = auth.uid() and product_seller_opt_in = true and public_consent = true and status = 'pending');
+      with check (owner_id = auth.uid() and product_seller_opt_in = true and public_consent = true
+        and lower(business_name) not like '%autolavado%' and lower(business_id) not like '%autolavado%'
+        and status in ('pending','approved'));
   end if;
   if exists (select 1 from pg_policies where schemaname = 'public' and tablename = 'catalog_products' and policyname = 'catalog products owner update') then
     alter policy "catalog products owner update" on public.catalog_products
       using (owner_id = auth.uid())
-      with check (owner_id = auth.uid() and product_seller_opt_in = true and public_consent = true);
+      with check (owner_id = auth.uid() and product_seller_opt_in = true and public_consent = true
+        and lower(business_name) not like '%autolavado%' and lower(business_id) not like '%autolavado%');
   else
     create policy "catalog products owner update"
       on public.catalog_products for update to authenticated
       using (owner_id = auth.uid())
-      with check (owner_id = auth.uid() and product_seller_opt_in = true and public_consent = true);
+      with check (owner_id = auth.uid() and product_seller_opt_in = true and public_consent = true
+        and lower(business_name) not like '%autolavado%' and lower(business_id) not like '%autolavado%');
   end if;
   if not exists (select 1 from pg_policies where schemaname = 'public' and tablename = 'catalog_products' and policyname = 'catalog products owner delete') then
     create policy "catalog products owner delete"
@@ -110,6 +120,50 @@ begin
     create trigger catalog_products_updated_at
       before update on public.catalog_products
       for each row execute function public.catalog_products_touch_updated_at();
+  end if;
+end;
+$$;
+
+-- Rule-based approval: low-risk food categories can be approved automatically.
+-- Unusual categories or restricted-item keywords stay pending for manual review.
+create or replace function public.catalog_products_auto_review()
+returns trigger
+language plpgsql
+security definer
+set search_path = pg_catalog, public
+as $$
+declare
+  v_text text;
+begin
+  new.status := 'pending';
+  v_text := lower(coalesce(new.product_name, '') || ' ' || coalesce(new.description, ''));
+  if new.product_seller_opt_in is true
+    and new.public_consent is true
+    and new.available_stock > 0
+    and new.price_mxn > 0
+    and new.category in ('Panadería','Comida','Frutas y verduras')
+    and lower(new.business_name) not like '%autolavado%'
+    and lower(new.business_id) not like '%autolavado%'
+    and v_text !~ '(medic|farmac|drog|armas?|pistola|munici[oó]n|explosiv|alcohol|cerveza|vino|tabaco|cigar|vape|marihuana|cannabis)'
+  then
+    new.status := 'approved';
+  end if;
+  return new;
+end;
+$$;
+revoke all on function public.catalog_products_auto_review() from public, anon, authenticated;
+
+do $$
+begin
+  if not exists (
+    select 1 from pg_trigger
+    where tgname = 'catalog_products_auto_review'
+      and tgrelid = 'public.catalog_products'::regclass
+      and not tgisinternal
+  ) then
+    create trigger catalog_products_auto_review
+      before insert on public.catalog_products
+      for each row execute function public.catalog_products_auto_review();
   end if;
 end;
 $$;
