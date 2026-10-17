@@ -79,7 +79,7 @@ function setModeUI(){
  $('#providerSubmit').textContent=backendConfigured?'Enviar para revisión':'Guardar ficha de prueba';
  $('#providerNote').textContent=backendConfigured?'Tu ficha y teléfono no serán públicos hasta que se revisen y aprueben. Solo envía un número de negocio que tengas permiso de publicar.':'La ficha y el teléfono se guardan solo en este dispositivo; no se publican para otros usuarios. Usa únicamente un número profesional que aceptes compartir.';
  $('#offerHelp').textContent=backendConfigured?'Envía tu ficha; solo se mostrará cuando se apruebe.':'Prueba con una ficha local; solo aparece en tu navegador.';
- if(backendConfigured){$('#listingSubtitle').textContent='Servicios y productos publicados con aprobación; los ejemplos siguen siendo ficticios.';$('#modeNotice').innerHTML='<b>Piloto:</b> los productos aprobados muestran existencias y contacto por WhatsApp. El cliente solicita; el negocio confirma manualmente y registra la venta. No hay checkout, pagos ni apartado automático.';}
+ if(backendConfigured){$('#listingSubtitle').textContent='Servicios y productos publicados con aprobación; los ejemplos siguen siendo ficticios.';$('#modeNotice').innerHTML='<b>Piloto:</b> algunas categorías de productos se aprueban automáticamente si cumplen los requisitos; las demás quedan pendientes. Solo se muestran productos aprobados con existencias y WhatsApp. El negocio confirma la venta manualmente; no hay checkout ni pagos.';}
 }
 async function loadSharedProviders(){
  if(!backendConfigured)return;
@@ -88,7 +88,7 @@ async function loadSharedProviders(){
   if(!response.ok)throw new Error('load_failed');
   const rows=await response.json();
   sharedProviders=rows.map(x=>({id:x.id,kind:'service',name:x.display_name,service:x.service,category:x.category,zone:x.zone,phone:x.whatsapp,price:x.price_from_mxn,hours:x.hours,desc:x.description||'Servicio registrado por su proveedor.',badge:'Aprobado',custom:false,icon:iconForCategory(x.category)}));
-  $('#modeNotice').innerHTML=catalogUnavailable?'<b>Catálogo de productos temporalmente no disponible.</b> La app sigue mostrando servicios y ejemplos; intenta de nuevo más tarde.':'<b>Piloto:</b> servicios aprobados y catálogo moderado. Para productos, confirma existencias por WhatsApp; tú y el comercio acuerdan manualmente y el vendedor registra la venta en Rescate del Día. No hay pagos ni apartado automático.';
+  $('#modeNotice').innerHTML=catalogUnavailable?'<b>Catálogo de productos temporalmente no disponible.</b> La app sigue mostrando servicios y ejemplos; intenta de nuevo más tarde.':'<b>Piloto:</b> servicios aprobados y catálogo de productos revisado automáticamente en categorías admitidas; los demás quedan pendientes. Confirma existencias por WhatsApp; el vendedor registra la venta en Rescate del Día. No hay pagos ni apartados automáticos.';
   render();
  }catch(err){$('#modeNotice').innerHTML='<b>Directorio temporalmente no disponible.</b> No pudimos cargar las fichas compartidas. Inténtalo de nuevo más tarde.';}
 }
@@ -165,6 +165,6 @@ $('#providerForm').addEventListener('submit',async e=>{
  catch(err){alert('No se pudo guardar en este dispositivo. Revisa el espacio disponible del navegador e inténtalo otra vez.');return;}
  $('#placeLabel').textContent='Atlacomulco';$('#providerDialog').close();e.target.reset();active='Todos';renderFilters();render();window.scrollTo({top:document.querySelector('.section-head').offsetTop-80,behavior:'smooth'});
 });
-if('serviceWorker'in navigator)window.addEventListener('load',()=>navigator.serviceWorker.register('./sw.js?v=9',{updateViaCache:'none'}).catch(()=>{}));
+if('serviceWorker'in navigator)window.addEventListener('load',()=>navigator.serviceWorker.register('./sw.js?v=10',{updateViaCache:'none'}).catch(()=>{}));
 </script>
 </body></html>
